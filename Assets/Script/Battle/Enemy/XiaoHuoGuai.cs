@@ -28,14 +28,18 @@ public class XiaoHuoGuai : EnemyBase
     }
 
 
-    private void OnDestroy()
-    {
-        if (!Application.isPlaying) return;
-        var eff = Instantiate(dieEffect);
-        var pos = transform.position;
-        pos.y += 1;
-        eff.transform.position = pos;
-        eff.Play();
-        Destroy(eff.gameObject,0.4f);
-    }
+   public override void BeHit(BeHitData data)
+       {
+           base.BeHit(data);
+           
+           if (hp <= 0 )
+           {
+               var eff = Instantiate(dieEffect);
+               var pos = transform.position;
+               pos.y += 1;
+               eff.transform.position = pos;
+               eff.Play();
+               Destroy(eff.gameObject, 0.4f);
+           }
+       }
 }

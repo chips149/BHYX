@@ -5,7 +5,7 @@ public class Dog : EnemyBase
     private static GameObject firePlane;
 
     [Header("生成间隔")]
-    public float spawnInterval = 2f; 
+    public float spawnInterval = 1.5f; 
     private float spawnTimer; 
 
     void Start()

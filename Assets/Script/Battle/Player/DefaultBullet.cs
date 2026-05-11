@@ -18,7 +18,7 @@ public class DefaultBullet : MonoBehaviour
 
     public static DefaultBullet Shoot(Vector3 startPos, Vector3 endPos, PlayerManager pm)
     {
-        prefab ??= Resources.Load<DefaultBullet>("Prefab/Bullet");
+        prefab ??= Resources.Load<DefaultBullet>("Prefab/Bullet/Bullet");
         var bullet = Instantiate(prefab);
         bullet.pm = pm;
         bullet.transform.localScale *= pm.baseProperty.bulletScale;
@@ -56,11 +56,25 @@ public class DefaultBullet : MonoBehaviour
         var finalDamage = pm.GetFinalDamage();
         var results = new Collider[32];
         var size = Physics.OverlapSphereNonAlloc(transform.position, transform.localScale.x, results);
+        
+        bool hitEnemy = false;
+        
         for (var i = 0; i < size; i++)
         {
             var col = results[i];
             var hit = col.gameObject.GetComponent<IBeHit>();
             if (hit == null) continue;
+            hitEnemy = true;
+
+            if (hitEnemy)
+            {
+                pm.NotifyBulletHit();
+            }
+
+            if (!hitEnemy)
+            {
+                pm.NotifyBulletMiss();
+            }
             // 先执行攻击buff
             var attackData = new AttackData()
             {
@@ -78,6 +92,15 @@ public class DefaultBullet : MonoBehaviour
             });
         }
         
+        for (var i = 0; i < size; i++)
+        {
+            var firePlane = results[i].GetComponent<FirePlane>();
+            if (firePlane != null)
+            {
+                firePlane.DestroyByBullet();
+            }
+        }
+
         ballon.gameObject.SetActive(false);
         splash.gameObject.SetActive(true);
         

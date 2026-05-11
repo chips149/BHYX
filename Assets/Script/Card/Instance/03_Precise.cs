@@ -3,8 +3,9 @@ public class PreciseCardData:CardData
 {
     public override void OnChosen()
     {
-        GameState.Pm.baseProperty.maxSpread *= 0.75f;
-        GameState.Pm.baseProperty.maxHp -= 5;
+        var pp=GameState.Pm.baseProperty;
+        pp.maxSpread *= 0.75f;
+        pp.maxHp -= 5;
         GameState.Pm.UpdateProperty();
     }
 }

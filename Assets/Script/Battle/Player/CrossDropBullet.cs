@@ -23,7 +23,7 @@ public class CrossDropBullet : MonoBehaviour
         {
             isCreated = true;
 
-            prefab = Resources.Load<CrossDropBullet>("Prefab/CrossDrop");
+            prefab = Resources.Load<CrossDropBullet>("Prefab/Bullet/CrossDrop");
             pool = new ObjectPool<CrossDropBullet>(OnCreate, OnGet, OnRelease);
 
             GameState.Bm.onDispose += () =>

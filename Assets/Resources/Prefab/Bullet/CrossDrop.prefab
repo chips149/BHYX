@@ -106,7 +106,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 2
+  m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &8872336039772040174
 Rigidbody:
@@ -148,7 +148,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   xzSpeed: 15
-  lifeTime: 0.3333
+  lifeTime: 0.4
 --- !u!1001 &1374977908392893637
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -157,6 +157,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 527558267707823729}
     m_Modifications:
+    - target: {fileID: 3354059250353269924, guid: 9c61258114642e74893338237199ab34, type: 3}
+      propertyPath: scalingMode
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3354059250353269924, guid: 9c61258114642e74893338237199ab34, type: 3}
       propertyPath: InitialModule.size3D
       value: 0

@@ -3,9 +3,10 @@ public class DelicateBulletCardData : CardData
 {
     public override void OnChosen()
     {
-        GameState.Pm.baseProperty.critDamage += 20;
-        GameState.Pm.baseProperty.bulletReloadTime *=0.95f;
-        GameState.Pm.baseProperty.bulletScale -=0.1f;
+        var pp = GameState.Pm.baseProperty;
+        pp.critDamage += 20 * pp.critDamageCorrection;
+        pp.bulletReloadTime *=0.95f;
+        pp.bulletScale -=0.1f;
         GameState.Pm.UpdateProperty();
     }
 }

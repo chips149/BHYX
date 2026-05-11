@@ -128,7 +128,7 @@ public abstract class EnemyBase : MonoBehaviour, IBeHit
     }
 
 
-    protected void UpdateHealthDisplay()
+    public void UpdateHealthDisplay()
     {
         enemyText.text = $"{hp}";
     }

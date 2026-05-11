@@ -14,6 +14,8 @@ public class PlayerManager
     public PlayerHealth playerHealth;
     public PlayerProperty baseProperty;
     public PlayerProperty finalProperty;
+    public event Action OnBulletHit;
+    public event Action OnBulletMiss;
 
     public readonly GameplayContainer container = new();
 
@@ -21,37 +23,52 @@ public class PlayerManager
     {
         spawnTrans = GameObject.Find("SpawnPoint").transform;
 
-        var defaultPlayerPrefab = Resources.Load<PlayerBase>("Prefab/Player");
-        player = Object.Instantiate(defaultPlayerPrefab, spawnTrans.position, spawnTrans.rotation);
-        player.Initialize(this);
-
-        playerHealth = GameObject.Find("Village").GetComponent<PlayerHealth>();
-        playerHealth.Initialize(this);
-
         baseProperty = new PlayerProperty()
         {
             damage = 2,
+            attackInterval = 1,
+            maxBulletCount = 5,
             critRate = 5,
             critDamage = 1.15f,
             bulletScale = 1f,
             bulletReloadTime = 1.5f,
             maxSpread = 4.5f,
+            minSpread=2.5f,
             maxHp = 50f,
         };
 
         finalProperty = new PlayerProperty()
         {
             damage = baseProperty.damage,
+            attackInterval = baseProperty.attackInterval,
+            maxBulletCount = baseProperty.maxBulletCount,
             critRate = baseProperty.critRate,
             critDamage = baseProperty.critDamage,
             bulletScale = baseProperty.bulletScale,
             bulletReloadTime = baseProperty.bulletReloadTime,
             maxSpread = baseProperty.maxSpread,
+            minSpread=baseProperty.minSpread,
             maxHp = baseProperty.maxHp,
         };
+        
+        playerHealth = GameObject.Find("Village").GetComponent<PlayerHealth>();
+        playerHealth.Initialize(this);
 
+        var defaultPlayerPrefab = Resources.Load<PlayerBase>("Prefab/Player");
+        player = Object.Instantiate(defaultPlayerPrefab, spawnTrans.position, spawnTrans.rotation);
+        player.Initialize(this);
     }
 
+    public void NotifyBulletHit()
+    {
+        OnBulletHit?.Invoke();
+    }
+
+    public void NotifyBulletMiss()
+    {
+        OnBulletMiss?.Invoke();
+    }
+    
     public void Tick(float dt)
     {
         player.Tick(Time.deltaTime);
@@ -74,21 +91,29 @@ public class PlayerManager
 
     public void UpdateProperty()
     {
-        finalProperty.damage = baseProperty.damage;
-        finalProperty.critRate = baseProperty.critRate;
-        finalProperty.critDamage = baseProperty.critDamage;
-        finalProperty.bulletScale = baseProperty.bulletScale;
-        finalProperty.bulletReloadTime = baseProperty.bulletReloadTime;
-        finalProperty.maxSpread = baseProperty.maxSpread;
-        finalProperty.maxHp = baseProperty.maxHp;
+        finalProperty.damage = baseProperty.damage;//攻击力
+        finalProperty.attackInterval = baseProperty.attackInterval;//攻击间隔 
+        finalProperty.critRate = baseProperty.critRate;//暴击率 
+        finalProperty.critDamage = baseProperty.critDamage;//暴击伤害
+        finalProperty.bulletScale = baseProperty.bulletScale; //子弹大小
+        finalProperty.bulletReloadTime = baseProperty.bulletReloadTime;//子弹回复速度
+        finalProperty.maxSpread = baseProperty.maxSpread;//最大散步范围 
+        finalProperty.minSpread = baseProperty.minSpread;//最小散步范围
+        finalProperty.maxHp = baseProperty.maxHp;//生命值 
 
         player.bulletReloadTime = baseProperty.bulletReloadTime;
+        player.attackInterval = baseProperty.attackInterval;
 
         playerHealth.maxHp = baseProperty.maxHp;
         if (playerHealth.currentHp > baseProperty.maxHp)
             playerHealth.currentHp = baseProperty.maxHp;
         playerHealth.UpdateHealthDisplay();
         
+        if (player.bulletCount > baseProperty.maxBulletCount)
+        {
+            player.bulletCount = baseProperty.maxBulletCount;
+            player.UpdateBulletUI();
+        }
 
         container.Execute(finalProperty);
     }
@@ -101,12 +126,20 @@ public class PlayerManager
 
 public class PlayerProperty : GameplayEventData
 {
-    public float damage;
-    public float critRate;
-    public float critDamage;
-    public float bulletScale = 1f;
-    public float bulletReloadTime = 1.5f;
-    public float maxSpread = 4.5f;
-    public float maxHp = 50f;
+    public float damage;//攻击力
+    public float attackInterval; //攻击间隔 
+    public int maxBulletCount;//子弹上限
+    public float critRate;//暴击率
+    public float critDamage;//暴击伤害
+    public float bulletScale = 1f;//子弹大小
+    public float bulletReloadTime = 1.5f;//子弹恢复速度
+    public float maxSpread = 4.5f;//最大散步范围
+    public float minSpread = 2.5f;//最小散步范围
+    public float maxHp = 50f;//血量 
+
+    public float damageCorrection=1;
+    public float attackIntervalCorrection=1;
+    public float critRateCorrection=1;
+    public float critDamageCorrection=1;
 }
 

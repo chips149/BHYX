@@ -17,11 +17,10 @@ public class DefaultAimHandle : AimHandle
     private readonly GameObject aimObject;
 
     private const float SCALE_SPEED = 0.8f;
-    private const float MIN_SCALE = 2.5f;
 
     private float t;
     
-    private Vector3 _aimPos;
+    private Vector3 aimPos;
 
     public DefaultAimHandle()
     {
@@ -35,18 +34,19 @@ public class DefaultAimHandle : AimHandle
         aimObject.SetActive(true);
 
         var maxScale = GameState.Pm.baseProperty.maxSpread;
+        var minScale = GameState.Pm.baseProperty.minSpread;
         t += Time.deltaTime * SCALE_SPEED;
-        var scale = Mathf.Lerp(MIN_SCALE, maxScale, Mathf.PingPong(t, 1));
+        var scale = Mathf.Lerp(minScale, maxScale, Mathf.PingPong(t, 1));
 
         aimObject.transform.localScale = Vector3.one * scale;
         aimObject.transform.position = aimPos;
         
-        _aimPos =  aimPos;
+        this.aimPos =  aimPos;
     }
 
     public override void End()
     {
         aimObject.SetActive(false);
-        onAimEnd?.Invoke(_aimPos);
+        onAimEnd?.Invoke(aimPos);
     }
 }
