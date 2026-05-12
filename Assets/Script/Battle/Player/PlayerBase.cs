@@ -24,6 +24,11 @@ public abstract class PlayerBase : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         playerPoint = transform.Find("ShootPoint");
+
+
+        var textObj = GameObject.Find("BulletImageText");
+        if (textObj != null)
+            text = textObj.GetComponent<TextMeshProUGUI>();
     }
 
     public virtual void Initialize(PlayerManager pm)
@@ -31,24 +36,6 @@ public abstract class PlayerBase : MonoBehaviour
         this.pm = pm;
         aimHandle = new DefaultAimHandle();
         atkHandle = new DefaultAttackHandle(playerPoint.position, pm);
-
-        aimHandle.onAimEnd = (Vector3 aimPosition) =>
-        {
-            if (pm.bulletCount > 0 && pm.canAttack)
-            {
-                pm.bulletCount--;
-                UpdateBulletUI();
-
-                atkHandle.Attack(aimPosition);
-
-                pm.canAttack = false;
-                pm.attackCooldownTimer = 0;
-            }
-        };
-
-        var textObj = GameObject.Find("BulletImageText");
-        if (textObj != null)
-            text = textObj.GetComponent<TextMeshProUGUI>();
 
         pm.bulletCount = pm.baseProperty.maxBulletCount;
         pm.reloadTimer = 0;
@@ -111,10 +98,7 @@ public abstract class PlayerBase : MonoBehaviour
 
     public void UpdateBulletUI()
     {
-        if (text != null)
-        {
-            text.text = $"{pm.bulletCount}/{pm.baseProperty.maxBulletCount}";
-        }
+        text.text = $"{pm.bulletCount}/{pm.baseProperty.maxBulletCount}";
     }
 }
 

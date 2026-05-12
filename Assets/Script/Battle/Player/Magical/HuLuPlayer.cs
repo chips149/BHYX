@@ -21,5 +21,20 @@ public class HuLuPlayer : PlayerBase
         pm.baseProperty.critDamageCorrection = 1.5f;
         
         pm.UpdateProperty();
+        
+        
+        aimHandle.onAimEnd = ( aimPosition) =>
+        {
+            if (pm.bulletCount > 0 && pm.canAttack)
+            {
+                pm.bulletCount--;
+                UpdateBulletUI();
+
+                atkHandle.Attack(aimPosition);
+
+                pm.canAttack = false;
+                pm.attackCooldownTimer = 0;
+            }
+        };
     }
 }
