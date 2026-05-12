@@ -4,12 +4,10 @@ using UnityEngine;
 
 public class YuHuanPlayer : PlayerBase
 {
-    public PlayerManager pm;
     public float finalCardDamage;
     public override void Initialize(PlayerManager pm)
     {
         base.Initialize(pm);
-        this.pm = pm;
 
         pm.baseProperty.damage = 1;
         pm.baseProperty.attackInterval = 0.8f;

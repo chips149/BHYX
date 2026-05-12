@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Cysharp.Threading.Tasks;
+using Framework;
 using UnityEngine;
 using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
@@ -25,20 +26,52 @@ public class SpawnMonsterHandler : MonoBehaviour
     private Action onWaveEnd;
     private Action onLevelEnd;
 
+    private int currentLevel = 1;
+    private bool waitingForCard;
+    private bool levelSpawningDone;
+    private int currentWaveIndex;
+    private int totalWavesInLevel;
+
     // Start is called before the first frame update
     void Start()
     {
         LoadMonster();
         LoadLevelData();
         LoadMonsterPrefabs();
-        // debug
 
+        StartLevel(currentLevel);
+    }
 
-        StartSpawn(1, null, NextWave, () =>
+    void Update()
+    {
+        if (levelSpawningDone && !waitingForCard)
+        {
+            var em = ModulesManager.Get<EnemyManager>();
+            if (em.enemies.Count == 0)
+            {
+                levelSpawningDone = false;
+                onLevelEnd?.Invoke();
+            }
+        }
+
+        if (waitingForCard && !drawCardPanel.gameObject.activeSelf)
+        {
+            waitingForCard = false;
+            Time.timeScale = 1;
+            currentLevel++;
+            if (currentLevel < levelData.Count)
+                StartLevel(currentLevel);
+        }
+    }
+
+    public void StartLevel(int level)
+    {
+        levelSpawningDone = false;
+        StartSpawn(level, null, NextWave, () =>
         {
             drawCardPanel.OpenDrawCardPanel();
             Time.timeScale = 0;
-            onLevelEnd?.Invoke();
+            waitingForCard = true;
         });
     }
 
@@ -59,18 +92,21 @@ public class SpawnMonsterHandler : MonoBehaviour
 
     private IEnumerator SpawnLevel(int level)
     {
-        Debug.Log("start");
         var ld = levelData[level];
+        totalWavesInLevel = ld.Count;
+        currentWaveIndex = 0;
+        Debug.Log("start" );
+        RefreshLevelUI();
 
         foreach (var waveHardness in ld)
         {
+            currentWaveIndex++;
+            RefreshLevelUI();
             _ = SpawnWave(waveHardness, Random.Range(4, 6));
             yield return null;
         }
 
-        yield return null;
-
-        onLevelEnd?.Invoke();
+        levelSpawningDone = true;
     }
 
     async UniTask SpawnWave(int hardness, int total)
@@ -87,10 +123,10 @@ public class SpawnMonsterHandler : MonoBehaviour
             SpawnOneRow(row[5], spawnPoints[5].position);
 
             onRowEnd?.Invoke();
-            // wait
             await UniTask.Delay(1000);
         }
-
+        
+        await UniTask.Delay(3000);
         onWaveEnd?.Invoke();
     }
 
@@ -98,7 +134,7 @@ public class SpawnMonsterHandler : MonoBehaviour
     {
         if (id == 0) return;
         var prefab = prefabs[id];
-        Object.Instantiate(prefab, position, Quaternion.Euler(0, 180, 0));
+        Instantiate(prefab, position, Quaternion.Euler(0, 180, 0));
     }
 
     private List<List<int>> Rand(int hardness, int total)
@@ -112,6 +148,15 @@ public class SpawnMonsterHandler : MonoBehaviour
             total -= formation.Count;
         }
         return result;
+    }
+
+    void RefreshLevelUI()
+    {
+        LevelWaveUI.instance.RefreshUI(
+            currentLevel,
+            currentWaveIndex,
+            totalWavesInLevel
+        );
     }
 
     // Load

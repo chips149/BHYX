@@ -9,24 +9,13 @@ public abstract class PlayerBase : MonoBehaviour
 {
     private static readonly int Aim = Animator.StringToHash("Aim");
 
+    protected PlayerManager pm;
     protected AttackHandle atkHandle;
     protected AimHandle aimHandle;
     protected Transform playerPoint;
-    protected float attackCooldownTimer;  
-    protected bool canAttack = true;   
 
     private Animator animator;
-
-    [Header("子弹配置")] 
-    public int maxBulletCount;
-    public float bulletReloadTime = 1.5f;
-    public float attackInterval = 0.5f;  
-
-    public int bulletCount;
-    private float reloadTimer;
-       
-
-    public TextMeshProUGUI text;
+    private TextMeshProUGUI text;
     private Vector3 aimPos;
 
     [Header("Configs")] public float offsetZ = 4;
@@ -39,21 +28,21 @@ public abstract class PlayerBase : MonoBehaviour
 
     public virtual void Initialize(PlayerManager pm)
     {
-        maxBulletCount = pm.baseProperty.maxBulletCount;
+        this.pm = pm;
         aimHandle = new DefaultAimHandle();
         atkHandle = new DefaultAttackHandle(playerPoint.position, pm);
 
         aimHandle.onAimEnd = (Vector3 aimPosition) =>
         {
-            if (bulletCount > 0 && canAttack)  
+            if (pm.bulletCount > 0 && pm.canAttack)
             {
-                bulletCount--;
+                pm.bulletCount--;
                 UpdateBulletUI();
 
                 atkHandle.Attack(aimPosition);
-                
-                canAttack = false;
-                attackCooldownTimer = 0;
+
+                pm.canAttack = false;
+                pm.attackCooldownTimer = 0;
             }
         };
 
@@ -61,21 +50,21 @@ public abstract class PlayerBase : MonoBehaviour
         if (textObj != null)
             text = textObj.GetComponent<TextMeshProUGUI>();
 
-        bulletCount = maxBulletCount;
-        reloadTimer = 0;
-        attackCooldownTimer = 0;
-        canAttack = true;
+        pm.bulletCount = pm.baseProperty.maxBulletCount;
+        pm.reloadTimer = 0;
+        pm.attackCooldownTimer = 0;
+        pm.canAttack = true;
         UpdateBulletUI();
     }
 
     public void Tick(float dt)
     {
         AutoReloadBullet(dt);
-        UpdateAttackCooldown(dt);  
+        UpdateAttackCooldown(dt);
 
         if (Input.GetMouseButton(0))
         {
-            if (bulletCount > 0 && canAttack)  
+            if (pm.bulletCount > 0 && pm.canAttack)
             {
                 aimPos = BattleUtility.AimPosition(transform.position, offsetZ);
                 aimHandle.Aiming(aimPos);
@@ -92,31 +81,30 @@ public abstract class PlayerBase : MonoBehaviour
 
     private void AutoReloadBullet(float dt)
     {
-        if (bulletCount >= maxBulletCount) return;
+        if (pm.bulletCount >= pm.baseProperty.maxBulletCount) return;
 
-        reloadTimer += dt;
-        if (reloadTimer >= bulletReloadTime)
+        pm.reloadTimer += dt;
+        if (pm.reloadTimer >= pm.baseProperty.bulletReloadTime)
         {
-            bulletCount++;
-            reloadTimer = 0;
+            pm.bulletCount++;
+            pm.reloadTimer = 0;
             UpdateBulletUI();
         }
     }
 
     public virtual void OnCardDamage(float amount)
     {
-        
     }
 
     private void UpdateAttackCooldown(float dt)
     {
-        if (!canAttack)
+        if (!pm.canAttack)
         {
-            attackCooldownTimer += dt;
-            if (attackCooldownTimer >= attackInterval)
+            pm.attackCooldownTimer += dt;
+            if (pm.attackCooldownTimer >= pm.baseProperty.attackInterval)
             {
-                canAttack = true;
-                attackCooldownTimer = 0;
+                pm.canAttack = true;
+                pm.attackCooldownTimer = 0;
             }
         }
     }
@@ -125,7 +113,7 @@ public abstract class PlayerBase : MonoBehaviour
     {
         if (text != null)
         {
-            text.text = $"{bulletCount}/{maxBulletCount}";
+            text.text = $"{pm.bulletCount}/{pm.baseProperty.maxBulletCount}";
         }
     }
 }

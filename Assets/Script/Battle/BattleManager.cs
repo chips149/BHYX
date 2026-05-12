@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Framework;
 using UnityEngine;
 
-[RegisterBeforeSceneLoad]
+//[RegisterBeforeSceneLoad]
 public class BattleManager : IUpdate
 {
     private readonly PlayerManager pm;

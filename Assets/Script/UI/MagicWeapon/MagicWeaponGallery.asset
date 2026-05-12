@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8aa73ac5f1082614ca1ce5982adf3eec, type: 3}
+  m_Name: MagicWeaponGallery
+  m_EditorClassIdentifier: 
+  prefabPath: Prefab/UI/DisplayCell
+  list:
+  - imgPath: UI/WeaponSelector/img_calabash_big
+    iconPath: UI/WeaponSelector/img_calabash_small
+    name: "\u846B\u82A6"
+    description: "\u9AD8\u989D\u63D0\u5347\u52A0\u6210  \u66B4\u51FB\u7387+50%\u4FEE\u6539\u3001\u66B4\u51FB\u4F24\u5BB3+50%\u4FEE\u6539"
+    detail: "\u653B\u51FB\u529B\uFF1A2   \u653B\u51FB\u95F4\u9694\uFF1A10   \u5B50\u5F39\u4E0A\u9650\uFF1A5  
+      \u5B50\u5F39\u56DE\u590D\u901F\u5EA6\uFF1A10   \u5B50\u5F39\u5927\u5C0F\uFF1A5  
+      \u6805\u680F\u8840\u91CF\uFF1A35   \u66B4\u51FB\u7387\uFF1A5%   \u66B4\u51FB\u4F24\u5BB3\uFF1A+50%  
+      \u6563\u5E03\u8303\u56F4\uFF1A3~5"
+  - imgPath: UI/WeaponSelector/img_turtal_big
+    iconPath: UI/WeaponSelector/img_turtal_small
+    name: "\u738B\u516B"
+    description: "\u6BCF\u6B21\u7A7A\u67AA\u4E0B\u4E00\u67AA\u4F24\u5BB3+1  \u653B\u51FB\u95F4\u9694+50%\u4FEE\u6539"
+    detail: "\u653B\u51FB\u529B\uFF1A1   \u653B\u51FB\u95F4\u9694\uFF1A10   \u5B50\u5F39\u4E0A\u9650\uFF1A5  
+      \u5B50\u5F39\u56DE\u590D\u901F\u5EA6\uFF1A8   \u5B50\u5F39\u5927\u5C0F\uFF1A5  
+      \u6805\u680F\u8840\u91CF\uFF1A25   \u66B4\u51FB\u7387\uFF1A5%   \u66B4\u51FB\u4F24\u5BB3\uFF1A+50%  
+      \u6563\u5E03\u8303\u56F4\uFF1A2~3"

@@ -18,6 +18,11 @@ public class PlayerManager
     public event Action OnBulletMiss;
 
     public readonly GameplayContainer container = new();
+    
+    public int bulletCount;
+    public float reloadTimer;
+    public float attackCooldownTimer;
+    public bool canAttack = true;
 
     public void Initialize()
     {
@@ -101,17 +106,14 @@ public class PlayerManager
         finalProperty.minSpread = baseProperty.minSpread;//最小散步范围
         finalProperty.maxHp = baseProperty.maxHp;//生命值 
 
-        player.bulletReloadTime = baseProperty.bulletReloadTime;
-        player.attackInterval = baseProperty.attackInterval;
-
         playerHealth.maxHp = baseProperty.maxHp;
         if (playerHealth.currentHp > baseProperty.maxHp)
             playerHealth.currentHp = baseProperty.maxHp;
         playerHealth.UpdateHealthDisplay();
         
-        if (player.bulletCount > baseProperty.maxBulletCount)
+        if (bulletCount > baseProperty.maxBulletCount)
         {
-            player.bulletCount = baseProperty.maxBulletCount;
+            bulletCount = baseProperty.maxBulletCount;
             player.UpdateBulletUI();
         }
 
@@ -142,4 +144,3 @@ public class PlayerProperty : GameplayEventData
     public float critRateCorrection=1;
     public float critDamageCorrection=1;
 }
-
