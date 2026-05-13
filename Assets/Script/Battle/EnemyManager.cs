@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Framework;
@@ -28,6 +29,14 @@ public class EnemyManager
         foreach (var enemy in enemies)
         {
             enemy.Tick(dt);
+        }
+
+        if (GameState.spawnOver)
+        {
+            if (enemies.Count == 0)
+            {
+                GameState.onLevelClear?.Invoke();
+            }
         }
     }
 }

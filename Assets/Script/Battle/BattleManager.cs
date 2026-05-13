@@ -9,7 +9,7 @@ public class BattleManager : IUpdate
     private PlayerManager pm;
     private EnemyManager em;
 
-    public  Action onDispose;
+    public Action onDispose;
 
     // Start is called before the first frame update
     public void Initialize()
@@ -25,8 +25,26 @@ public class BattleManager : IUpdate
 
         GameState.Bm = this;
         GameState.Pm = pm;
+        GameState.spawnOver = false;
 
         ModulesManager.Get<GlobalUpdate>().Register(this);
+
+        // 回调赋值
+        GameState.onWaveSpawnOver = (count, total) =>
+        {
+            LevelWaveUI.instance.RefreshUI(GameState.currentLevel, count, total);
+            Debug.Log("onWaveEnd");
+        };
+
+        GameState.onSpawnComplete = () => { GameState.spawnOver = true; };
+
+        GameState.onLevelClear = () =>
+        {
+            // TODO: 打开卡牌页面
+        };
+
+        // 开始刷怪
+        SpawnMonsterHandler.Instance.StartSpawn();
     }
 
     public bool IsDone { get; set; }

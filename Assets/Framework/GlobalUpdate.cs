@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -16,6 +17,11 @@ namespace Framework{
     [RegisterBeforeSceneLoad]
     public class GlobalUpdate : MonoBehaviour
     {
+        private void Awake()
+        {
+            DontDestroyOnLoad(gameObject);
+        }
+
         private readonly List<IUpdate>  _updates = new();
 
         public void Register(IUpdate update){

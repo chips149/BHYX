@@ -99,5 +99,14 @@ public static class GameState
 {
     public static BattleManager Bm;
     public static PlayerManager Pm;
+
+    public static Action<int, int> onRowSpawnOver;
+    public static Action<int,int> onWaveSpawnOver;
+    public static Action onSpawnComplete;
+    public static Action onLevelClear;
+    
+    
     public static string playerPath;
+    public static int currentLevel = 1;
+    public static bool spawnOver = false;
 }
