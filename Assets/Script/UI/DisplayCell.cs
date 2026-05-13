@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class DisplayCell : MonoBehaviour
 {
-    private UIDisplayPanel _manager;
+    private MagicWeaponPanel _manager;
 
     public int id;
     public Image img;
@@ -22,7 +22,7 @@ public class DisplayCell : MonoBehaviour
         self = GetComponent<Button>();
     }
 
-    public void Initialize(UIDisplayPanel manager, ConfigInfo info)
+    public void Initialize(MagicWeaponPanel manager, ConfigInfo info)
     {
         _manager = manager;
         //

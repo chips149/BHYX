@@ -6,7 +6,7 @@ using UnityEngine.Events;
 using UnityEngine.UI;
 
 
-public class UIDisplayPanel : MonoBehaviour
+public class MagicWeaponPanel : MonoBehaviour
 {
     public ConfigAsset displayAsset;
 
