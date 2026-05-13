@@ -26,6 +26,9 @@ public class YuHuanPlayer : PlayerBase
         pm.OnBulletHit += OnHit;
         pm.OnBulletMiss += OnMiss;
         
+        int level = MagicWeaponLevelUpSystem.GetLevel("YuHuan");
+        MagicWeaponLevelUpSystem.ApplyUpLevel(pm.baseProperty, level);
+        
         pm.UpdateProperty();
     }
     public override void OnCardDamage(float amount)

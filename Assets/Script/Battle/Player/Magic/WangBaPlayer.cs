@@ -22,6 +22,9 @@ public class WangBaPlayer : PlayerBase
 
         pm.baseProperty.damageCorrection = 1.25f;
         pm.baseProperty.attackIntervalCorrection = 1.25f;
+       
+        int level = MagicWeaponLevelUpSystem.GetLevel("WangBa");
+        MagicWeaponLevelUpSystem.ApplyUpLevel(pm.baseProperty, level);
         
         pm.UpdateProperty();
 

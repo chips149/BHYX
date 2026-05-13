@@ -20,6 +20,9 @@ public class HuLuPlayer : PlayerBase
         pm.baseProperty.critRateCorrection = 1.5f;
         pm.baseProperty.critDamageCorrection = 1.5f;
         
+        int level = MagicWeaponLevelUpSystem.GetLevel("HuLu");
+        MagicWeaponLevelUpSystem.ApplyUpLevel(pm.baseProperty, level);
+        
         pm.UpdateProperty();
         
         
