@@ -99,4 +99,5 @@ public static class GameState
 {
     public static BattleManager Bm;
     public static PlayerManager Pm;
+    public static string playerPath;
 }

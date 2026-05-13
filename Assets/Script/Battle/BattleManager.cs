@@ -4,16 +4,15 @@ using System.Collections.Generic;
 using Framework;
 using UnityEngine;
 
-//[RegisterBeforeSceneLoad]
 public class BattleManager : IUpdate
 {
-    private readonly PlayerManager pm;
-    private readonly EnemyManager em;
+    private PlayerManager pm;
+    private EnemyManager em;
 
     public  Action onDispose;
 
     // Start is called before the first frame update
-    public BattleManager()
+    public void Initialize()
     {
         pm = ModulesManager.Get<PlayerManager>();
         pm.Initialize();

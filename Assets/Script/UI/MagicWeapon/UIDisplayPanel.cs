@@ -19,6 +19,8 @@ public class UIDisplayPanel : MonoBehaviour
 
     public int selectedID = -1;
 
+    public string[] playerPrefab;
+
     public readonly List<DisplayCell> Cells = new();
     
     public UnityEvent onAfterInitialize;
@@ -55,5 +57,10 @@ public class UIDisplayPanel : MonoBehaviour
         nameText.text = cell.mwName;
         description.text = cell.description;
         detail.text = cell.detail;
+    }
+
+    public void ConfirmSelection()
+    {
+        GameState.playerPath = playerPrefab[selectedID];
     }
 }

@@ -457,7 +457,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &170182461
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1020,9 +1020,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 504033077}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 141.66667, y: -150}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 200, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &322221656
@@ -1381,9 +1381,9 @@ RectTransform:
   - {fileID: 1488248688}
   m_Father: {fileID: 504033077}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 883.3334, y: -150}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 150, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &526484160
@@ -2253,6 +2253,18 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
         m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1665040895}
+        m_TargetAssemblyTypeName: UIDisplayPanel, Assembly-CSharp
+        m_MethodName: ConfirmSelection
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -3248,6 +3260,9 @@ MonoBehaviour:
   detail: {fileID: 919641389}
   parent: {fileID: 1841438547}
   selectedID: -1
+  playerPrefab:
+  - Prefab/Player/Hulu
+  - Prefab/Player/WangBa
   onAfterInitialize:
     m_PersistentCalls:
       m_Calls: []
@@ -4123,9 +4138,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 504033077}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 525, y: -150}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 400, y: 230}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2128762774
@@ -4173,8 +4188,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 2128762777}
-        m_TargetAssemblyTypeName: SceneBtn1, Assembly-CSharp
-        m_MethodName: ToGame
+        m_TargetAssemblyTypeName: StartButton, Assembly-CSharp
+        m_MethodName: OnStartGameClicked
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4231,7 +4246,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2128762772}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3848f539f5542cd4ea96e1451e883d9a, type: 3}
+  m_Script: {fileID: 11500000, guid: 29fcf4aa94d0a3d41836392f8b2a545b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &1635518550269949446

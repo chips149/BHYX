@@ -13,7 +13,10 @@ public class Dog : EnemyBase
         firePlane ??= Resources.Load<GameObject>("Prefab/Enemy/FirePlane");
         spawnTimer = 0;
 
-        GameState.Bm.onDispose += () => firePlane = null;
+        if (GameState.Bm != null)
+        {
+            GameState.Bm.onDispose += () => firePlane = null;
+        }
     }
 
     public override void BeHit(BeHitData data)

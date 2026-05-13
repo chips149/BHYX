@@ -59,8 +59,16 @@ public class PlayerManager
         playerHealth = GameObject.Find("Village").GetComponent<PlayerHealth>();
         playerHealth.Initialize(this);
 
-        var defaultPlayerPrefab = Resources.Load<PlayerBase>("Prefab/Player");
-        player = Object.Instantiate(defaultPlayerPrefab, spawnTrans.position, spawnTrans.rotation);
+        string path;
+        if (string.IsNullOrEmpty(GameState.playerPath))
+        {
+            path = "Prefab/Player/HuLu";
+        }
+        else
+        {
+            path = GameState.playerPath;
+        }
+        player = Object.Instantiate(Resources.Load<PlayerBase>(path), spawnTrans.position, spawnTrans.rotation);
         player.Initialize(this);
     }
 
@@ -118,10 +126,6 @@ public class PlayerManager
         }
 
         container.Execute(finalProperty);
-    }
-
-    public void OnDestroy()
-    {
     }
 }
 
