@@ -14,12 +14,20 @@ public class MagicWeaponLevelUpSystem
         PlayerPrefs.SetInt($"MagicWeapon_{weaponName}_Level",level);
         PlayerPrefs.Save();
     }
+    
+    public static void ResetAllLevels()
+    {
+        string[] weaponNames = { "HuLu", "WangBa", "YuHuan" };
+        foreach (var name in weaponNames)
+        {
+            PlayerPrefs.DeleteKey($"MagicWeapon_{name}_Level");
+        }
+    }
 
     public static bool UpLevel(string weaponName)
     {
         var currentLevel = GetLevel(weaponName);
         SetLevel(weaponName,currentLevel+1);
-        Debug.Log($"法宝升级到{currentLevel+1}级");
         return true;
     }
 
@@ -33,7 +41,8 @@ public class MagicWeaponLevelUpSystem
         property.maxHp += level * 3;
     }
     
-    public static string GetUpgradePreview(PlayerProperty baseProperty, int currentLevel)
+
+    public static string GetUpgradePreview(int currentLevel)
     {
         int nextLevel = currentLevel + 1;
         return $"下一级 ({nextLevel} 级) 将提升：\n" +

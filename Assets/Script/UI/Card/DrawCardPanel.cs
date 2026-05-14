@@ -23,5 +23,7 @@ public class DrawCardPanel : MonoBehaviour
     public void CloseDrawCardPanel()
     {
         gameObject.SetActive(false);
+        GameState.currentLevel++;
+        SpawnMonsterHandler.Instance.StartSpawn();
     }
 }

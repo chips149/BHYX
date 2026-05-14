@@ -40,7 +40,8 @@ public class BattleManager : IUpdate
 
         GameState.onLevelClear = () =>
         {
-            // TODO: 打开卡牌页面
+            //TODO:打开卡牌界面
+            SpawnMonsterHandler.Instance.drawCardPanel.OpenDrawCardPanel();
         };
 
         // 开始刷怪

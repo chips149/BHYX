@@ -35,6 +35,7 @@ public class EnemyManager
         {
             if (enemies.Count == 0)
             {
+                GameState.spawnOver = false;
                 GameState.onLevelClear?.Invoke();
             }
         }

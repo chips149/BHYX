@@ -21,5 +21,6 @@ public class LevelWaveUI : MonoBehaviour
 
       waveSlider.maxValue = totalWaves;
       waveSlider.value = currentWave;
+      Debug.Log($"第{currentLevel}关" );
    }
 }

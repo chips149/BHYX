@@ -1,13 +1,8 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Cysharp.Threading.Tasks;
-using Framework;
 using UnityEngine;
-using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
-
 
 public class SpawnMonsterHandler : MonoBehaviour
 {
@@ -28,24 +23,35 @@ public class SpawnMonsterHandler : MonoBehaviour
         LoadMonster();
         LoadLevelData();
         LoadMonsterPrefabs();
+
     }
 
-    public void StartSpawn()
+       public void StartSpawn()
     {
+        if (GameState.currentLevel >= levelData.Count)
+        {
+            Debug.Log("所有关卡已完成");
+            return;
+        }
+
+        GameState.spawnOver = false;
         _ = SpawnLevel(GameState.currentLevel);
     }
+
+       
 
     private async UniTask SpawnLevel(int level)
     {
         var ld = levelData[level];
-
+        
         var total = ld.Count;
         var count = 0;
+        LevelWaveUI.instance?.RefreshUI(level, 0, total);
         foreach (var waveHardness in ld)
         {
-            await SpawnWave(waveHardness, Random.Range(4, 6));
             count++;
             GameState.onWaveSpawnOver?.Invoke(count, total);
+            await SpawnWave(waveHardness, Random.Range(4, 6));
         }
         
         GameState.onSpawnComplete?.Invoke();
@@ -92,8 +98,6 @@ public class SpawnMonsterHandler : MonoBehaviour
         return result;
     }
 
-    // Load
-
     void LoadMonsterPrefabs()
     {
         prefabs.Add(1, Resources.Load<XiaoHuoGuai>("Prefab/Enemy/XiaoHuoGuai1"));
@@ -108,7 +112,6 @@ public class SpawnMonsterHandler : MonoBehaviour
 
     void LoadMonster()
     {
-        // var text = Resources.Load<TextAsset>("BHYX/Monsters").text;
         var text = monsterConfig.text;
         var lines = text.Split("\n");
         foreach (var line in lines)
