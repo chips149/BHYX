@@ -8,7 +8,8 @@ public class GameInitializer : MonoBehaviour
 {
     private void Start()
     {
-       
+        SaveManager.Load();
+
         var bm = ModulesManager.Get<BattleManager>();
         bm.Initialize();
     }

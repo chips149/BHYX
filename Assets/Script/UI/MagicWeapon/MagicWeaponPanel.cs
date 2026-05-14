@@ -62,5 +62,6 @@ public class MagicWeaponPanel : MonoBehaviour
     public void ConfirmSelection()
     {
         GameState.playerPath = playerPrefab[selectedID];
+        SaveManager.ToSave();
     }
 }

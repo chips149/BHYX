@@ -42,6 +42,11 @@ public class PlayerManager
             maxHp = 50f,
         };
 
+        if (SaveManager.HasLoadedSave && SaveData.Instance.playerProperty != null)
+        {
+            baseProperty = SaveData.Instance.playerProperty;
+        }
+
         finalProperty = new PlayerProperty()
         {
             damage = baseProperty.damage,
@@ -57,7 +62,13 @@ public class PlayerManager
         };
         
         playerHealth = GameObject.Find("Village").GetComponent<PlayerHealth>();
+        playerHealth.maxHp = baseProperty.maxHp;
         playerHealth.Initialize(this);
+        if (SaveManager.HasLoadedSave && SaveData.Instance.currentHp > 0)
+        {
+            playerHealth.currentHp = Mathf.Min(SaveData.Instance.currentHp, playerHealth.maxHp);
+            playerHealth.UpdateHealthDisplay();
+        }
 
         string path;
         if (string.IsNullOrEmpty(GameState.playerPath))
@@ -129,7 +140,7 @@ public class PlayerManager
     }
 }
 
-
+[Serializable]
 public class PlayerProperty : GameplayEventData
 {
     public float damage;//攻击力
