@@ -57,6 +57,32 @@ public class SaveManager
         return true;
     }
 
+    public static bool HasSaveFile()
+    {
+        if (!File.Exists(SavePath))
+            return false;
+
+        try
+        {
+            var json = File.ReadAllText(SavePath);
+            return !string.IsNullOrWhiteSpace(json);
+        }
+        catch
+        {
+            return false;
+        }
+    }
+
+    public static void ClearPersistedSaveForNewGame()
+    {
+        if (File.Exists(SavePath))
+            File.Delete(SavePath);
+
+        SaveData.New();
+        ApplyToGameState();
+        HasLoadedSave = false;
+    }
+
     private static void ApplyToGameState()
     {
         GameState.currentLevel = SaveData.Instance.currentLevel;

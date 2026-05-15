@@ -52,6 +52,8 @@ public class BattleManager : IUpdate
 
     public void OnUpdate()
     {
+        if (GameState.isGameOver) return;
+        
         var dt = Time.deltaTime;
         pm.Tick(dt);
         em.Tick(dt);

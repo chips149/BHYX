@@ -19,6 +19,7 @@ public class PlayerManager
 
     public readonly GameplayContainer container = new();
     
+    public Vector3 lastAimPos;
     public int bulletCount;
     public float reloadTimer;
     public float attackCooldownTimer;
@@ -81,6 +82,9 @@ public class PlayerManager
         }
         player = Object.Instantiate(Resources.Load<PlayerBase>(path), spawnTrans.position, spawnTrans.rotation);
         player.Initialize(this);
+        
+        bulletCount = baseProperty.maxBulletCount;
+        player.UpdateBulletUI();
     }
 
     public void NotifyBulletHit()

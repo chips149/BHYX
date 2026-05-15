@@ -19,6 +19,7 @@ public class DefaultAttackHandle : AttackHandle
 
     public override void Attack(Vector3 aimPos)
     {
+        pm.lastAimPos = aimPos;
         DefaultBullet.Shoot(startPos, aimPos, pm);
     }
 }

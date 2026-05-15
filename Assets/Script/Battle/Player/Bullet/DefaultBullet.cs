@@ -15,12 +15,14 @@ public class DefaultBullet : MonoBehaviour
     private static DefaultBullet prefab;
 
     private PlayerManager pm;
+    private Action<Vector3> onLanded;
 
-    public static DefaultBullet Shoot(Vector3 startPos, Vector3 endPos, PlayerManager pm)
+    public static DefaultBullet Shoot(Vector3 startPos, Vector3 endPos, PlayerManager pm, Action<Vector3> onLanded = null)
     {
         prefab ??= Resources.Load<DefaultBullet>("Prefab/Bullet/Bullet");
         var bullet = Instantiate(prefab);
         bullet.pm = pm;
+        bullet.onLanded = onLanded;
         bullet.transform.localScale *= pm.baseProperty.bulletScale;
         _ = bullet.ShootAni(startPos, endPos);
         return bullet;
@@ -51,6 +53,7 @@ public class DefaultBullet : MonoBehaviour
         }
 
         transform.position = end;
+        onLanded?.Invoke(end);
 
         // 区域监测
         var finalDamage = pm.GetFinalDamage();
@@ -66,15 +69,6 @@ public class DefaultBullet : MonoBehaviour
             if (hit == null) continue;
             hitEnemy = true;
 
-            if (hitEnemy)
-            {
-                pm.NotifyBulletHit();
-            }
-
-            if (!hitEnemy)
-            {
-                pm.NotifyBulletMiss();
-            }
             // 先执行攻击buff
             var attackData = new AttackData()
             {
@@ -91,6 +85,11 @@ public class DefaultBullet : MonoBehaviour
                 afterHit = AfterHit
             });
         }
+        
+        if (hitEnemy)
+            pm.NotifyBulletHit();
+        else
+            pm.NotifyBulletMiss();
         
         for (var i = 0; i < size; i++)
         {

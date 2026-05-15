@@ -52,6 +52,7 @@ public class PlayerHealth : MonoBehaviour, IBeHit
         if (currentHp <= 0)
         {
             currentHp = 0;
+            GameUIManager.instance.Lose();
         }
 
         UpdateHealthDisplay();

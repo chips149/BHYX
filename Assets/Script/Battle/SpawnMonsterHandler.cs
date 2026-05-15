@@ -49,6 +49,8 @@ public class SpawnMonsterHandler : MonoBehaviour
         LevelWaveUI.instance?.RefreshUI(level, 0, total);
         foreach (var waveHardness in ld)
         {
+            if (GameState.isGameOver) return;
+            
             count++;
             GameState.onWaveSpawnOver?.Invoke(count, total);
             await SpawnWave(waveHardness, Random.Range(4, 6));
@@ -64,6 +66,8 @@ public class SpawnMonsterHandler : MonoBehaviour
         var rowCount = 0;
         foreach (var row in r)
         {
+            if (GameState.isGameOver) return;
+            
             SpawnOneRow(row[0], spawnPoints[0].position);
             SpawnOneRow(row[1], spawnPoints[1].position);
             SpawnOneRow(row[2], spawnPoints[2].position);

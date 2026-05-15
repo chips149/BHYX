@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 public class WangBaPlayer : PlayerBase
@@ -11,10 +12,10 @@ public class WangBaPlayer : PlayerBase
 
         pm.baseProperty.damage = 1;
         pm.baseProperty.attackInterval = 1;
-        pm.baseProperty.maxBulletCount = 7;
+        pm.baseProperty.maxBulletCount = 5;
         pm.baseProperty.bulletReloadTime = 0.8f;
         pm.baseProperty.bulletScale = 2;
-        pm.baseProperty.maxHp = 30;
+        pm.baseProperty.maxHp = 25;
         pm.baseProperty.critRate = 5;
         pm.baseProperty.critDamage = 1.5f;
         pm.baseProperty.maxSpread = 3;
@@ -27,22 +28,31 @@ public class WangBaPlayer : PlayerBase
         MagicWeaponLevelUpSystem.ApplyUpLevel(pm.baseProperty, level);
         
         pm.UpdateProperty();
-
-        var originalOnAimEnd = aimHandle.onAimEnd;
         
-        aimHandle.onAimEnd = (Vector3 aimPosition) =>
+        aimHandle.onAimEnd = ( aimPosition) =>
         {
-            originalOnAimEnd?.Invoke(aimPosition);
-            
-            attackCount++;
-
-            if (attackCount >= 3)
+            if (pm.bulletCount > 0 && pm.canAttack)
             {
-                attackCount = 0;
+                pm.bulletCount--;
+                attackCount++;
+                UpdateBulletUI();
 
-                Vector3 sealSpawnPos = playerPoint.position + Vector3.up * 10f;
+                if (attackCount >= 3)
+                {
+                    attackCount = 0;
+                    DefaultBullet.Shoot(playerPoint.position, aimPosition, pm, async landedPosition =>
+                    {
+                        await UniTask.Delay(500);
+                        DefaultSealBullet.Shoot(landedPosition, pm, pm.baseProperty.damage);
+                    });
+                }
+                else
+                {
+                    atkHandle.Attack(aimPosition);
+                }
 
-                DefaultSealBullet.Shoot(sealSpawnPos, pm, pm.GetFinalDamage() * 2); 
+                pm.canAttack = false;
+                pm.attackCooldownTimer = 0;
             }
         };
     }

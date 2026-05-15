@@ -109,4 +109,5 @@ public static class GameState
     public static string playerPath;
     public static int currentLevel = 1;
     public static bool spawnOver = false;
+    public static bool isGameOver = false;
 }

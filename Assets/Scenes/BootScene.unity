@@ -38,7 +38,6 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -215,7 +214,7 @@ GameObject:
   - component: {fileID: 196674602}
   - component: {fileID: 196674601}
   m_Layer: 5
-  m_Name: Button (Legacy) (2)
+  m_Name: AboutGameButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -432,8 +431,8 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1019884167}
   - {fileID: 1878310678}
+  - {fileID: 1019884167}
   - {fileID: 196674600}
   m_Father: {fileID: 1576174980}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -776,9 +775,8 @@ GameObject:
   - component: {fileID: 1019884170}
   - component: {fileID: 1019884169}
   - component: {fileID: 1019884168}
-  - component: {fileID: 1019884171}
   m_Layer: 5
-  m_Name: Button (Legacy)
+  m_Name: NewGameButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -848,9 +846,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1019884171}
-        m_TargetAssemblyTypeName: SceneBtn, Assembly-CSharp
-        m_MethodName: ToGame
+      - m_Target: {fileID: 1576174983}
+        m_TargetAssemblyTypeName: BootPanel, Assembly-CSharp
+        m_MethodName: OnNewGameClicked
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -898,18 +896,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1019884166}
   m_CullTransparentMesh: 1
---- !u!114 &1019884171
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1019884166}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d756c0219da4a1648851bc7785d8e75b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1513756571
 GameObject:
   m_ObjectHideFlags: 0
@@ -989,6 +975,7 @@ GameObject:
   - component: {fileID: 1576174980}
   - component: {fileID: 1576174982}
   - component: {fileID: 1576174981}
+  - component: {fileID: 1576174983}
   m_Layer: 5
   m_Name: Panel
   m_TagString: Untagged
@@ -1054,6 +1041,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1576174979}
   m_CullTransparentMesh: 1
+--- !u!114 &1576174983
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1576174979}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: add03a0a93cfe7841a9d243a1ab656f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  continueButton: {fileID: 1878310679}
 --- !u!1 &1878310677
 GameObject:
   m_ObjectHideFlags: 0
@@ -1067,7 +1067,7 @@ GameObject:
   - component: {fileID: 1878310680}
   - component: {fileID: 1878310679}
   m_Layer: 5
-  m_Name: Button (Legacy) (1)
+  m_Name: ContinueButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1136,7 +1136,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1878310680}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1576174983}
+        m_TargetAssemblyTypeName: BootPanel, Assembly-CSharp
+        m_MethodName: OnContinueClicked
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1878310680
 MonoBehaviour:
   m_ObjectHideFlags: 0
