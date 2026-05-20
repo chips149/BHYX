@@ -138,6 +138,7 @@ public class MagicWeaponLevelUpPanel : MonoBehaviour
         if (MagicWeaponLevelUpSystem.UpLevel(weaponKey))
         {
             RefreshModule(index);
+            FindObjectOfType<MainMenuUI>()?.OnEnable(); 
         }
     }
 

@@ -33,6 +33,7 @@ public class CardViewer : MonoBehaviour
     
     private void OnClick()
     {
+        SaveData.AddCard(_cardData.id);
         _drawCardPanel.CloseDrawCardPanel();
         _cardData.OnChosen();
     }

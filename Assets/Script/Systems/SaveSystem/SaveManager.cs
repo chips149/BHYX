@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Linq;
 using UnityEngine;
 
 public class SaveManager
@@ -18,6 +19,7 @@ public class SaveManager
             if (GameState.Pm.playerHealth != null)
             {
                 SaveData.Instance.currentHp = Mathf.RoundToInt(GameState.Pm.playerHealth.currentHp);
+                SaveData.Instance.shield = GameState.Pm.playerHealth.shield;
             }
         }
 
@@ -52,6 +54,11 @@ public class SaveManager
             SaveData.Instance.playerProperty = new PlayerProperty();
         }
 
+        if (SaveData.Instance.chosenCardIds == null)
+        {
+            SaveData.Instance.chosenCardIds = new System.Collections.Generic.List<int>();
+        }
+
         ApplyToGameState();
         HasLoadedSave = true;
         return true;
@@ -81,6 +88,28 @@ public class SaveManager
         SaveData.New();
         ApplyToGameState();
         HasLoadedSave = false;
+
+        // 重置卡牌静态状态
+        WaterTornado.hasWaterTornado = false;
+    }
+    
+    public static void ReplayChosenCards()
+    {
+        if (SaveData.Instance.chosenCardIds == null || SaveData.Instance.chosenCardIds.Count == 0)
+            return;
+
+        var cardMap = CardHandler.Data.ToDictionary(c => c.id, c => c);
+        foreach (var cardId in SaveData.Instance.chosenCardIds)
+        {
+            if (cardMap.TryGetValue(cardId, out var cardData))
+            {
+                cardData.OnReplay();
+            }
+            else
+            {
+                Debug.LogWarning($"SaveManager: 找不到卡牌ID {cardId}，跳过重放");
+            }
+        }
     }
 
     private static void ApplyToGameState()

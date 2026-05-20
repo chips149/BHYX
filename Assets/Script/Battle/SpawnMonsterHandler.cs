@@ -30,7 +30,7 @@ public class SpawnMonsterHandler : MonoBehaviour
     {
         if (GameState.currentLevel >= levelData.Count)
         {
-            Debug.Log("所有关卡已完成");
+            GameUIManager.instance.Win();
             return;
         }
 
@@ -67,6 +67,7 @@ public class SpawnMonsterHandler : MonoBehaviour
         foreach (var row in r)
         {
             if (GameState.isGameOver) return;
+            if (this == null) return;
             
             SpawnOneRow(row[0], spawnPoints[0].position);
             SpawnOneRow(row[1], spawnPoints[1].position);
@@ -83,8 +84,20 @@ public class SpawnMonsterHandler : MonoBehaviour
 
     private void SpawnOneRow(int id, Vector3 position)
     {
-        if (id == 0) return;
-        var prefab = prefabs[id];
+        if (id == 0) return; 
+        //var prefab = prefabs[id];
+        
+        if (!prefabs.TryGetValue(id, out var prefab))
+        {
+            Debug.LogError($"SpawnMonsterHandler: 怪物ID {id} 没有对应的预设体");
+            return;
+        }
+        if (prefab == null)
+        {
+            Debug.LogError($"SpawnMonsterHandler: 怪物ID {id} 的预设体为 null");
+            return;
+        }
+        
         Instantiate(prefab, position, Quaternion.Euler(0, 180, 0));
     }
 

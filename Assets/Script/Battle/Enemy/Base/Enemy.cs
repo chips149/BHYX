@@ -17,8 +17,8 @@ public abstract class EnemyBase : MonoBehaviour, IBeHit
     public bool isDead;
     public float speed = 1;
     public float distance = 2;
-
     public ParticleSystem beHitPrefab;
+    
     protected Animator ani;
     protected PlayerManager pm;
 
@@ -62,12 +62,11 @@ public abstract class EnemyBase : MonoBehaviour, IBeHit
         ani.SetBool("ATK", true);
         //... 死亡效果
         isDead = true;
-        
         beHit.BeHit(new()
         {
             damage = hp,
             from = name
-        });
+        }); 
     }
 
     protected virtual void Move(float dt)
@@ -94,6 +93,8 @@ public abstract class EnemyBase : MonoBehaviour, IBeHit
             {
                 beKiller = transform,
             });
+            CoinSystem.AddCoin(1);
+            WaterTornado.OnEnemyDeath(transform.position);
             Destroy(gameObject, 0.4f);
         }
         UpdateHealthDisplay();

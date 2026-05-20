@@ -6,9 +6,9 @@ public class BigBulletCardData : CardData
     public override void OnChosen()
     {
         var pp = GameState.Pm.baseProperty;
-        pp.damage += 3 * pp.damageCorrection;
-        pp.bulletScale += 0.35f;
-        pp.bulletReloadTime *= 1.1f;
+        pp.bulletScale *= 1.35f;
+        pp.bulletReloadTime *= 0.90f;
+        pp.attackInterval *= 0.85f;
         GameState.Pm.UpdateProperty();
     }
 }

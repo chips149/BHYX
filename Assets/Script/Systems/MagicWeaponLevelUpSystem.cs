@@ -27,8 +27,15 @@ public class MagicWeaponLevelUpSystem
     public static bool UpLevel(string weaponName)
     {
         var currentLevel = GetLevel(weaponName);
+        var cost = GetUpgradeCost(currentLevel);
+        if (!CoinSystem.SpendCoin(cost)) return false;
         SetLevel(weaponName,currentLevel+1);
         return true;
+    }
+    
+    public static int GetUpgradeCost(int currentLevel)
+    {
+        return (currentLevel + 1) * 100; 
     }
 
     public static void ApplyUpLevel(PlayerProperty property, int level)

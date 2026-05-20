@@ -15,6 +15,7 @@ public class BattleManager : IUpdate
     public void Initialize()
     {
         pm = ModulesManager.Get<PlayerManager>();
+        GameState.Pm = pm;
         pm.Initialize();
         onDispose += ModulesManager.Dispose<PlayerManager>;
 
@@ -24,7 +25,6 @@ public class BattleManager : IUpdate
 
 
         GameState.Bm = this;
-        GameState.Pm = pm;
         GameState.spawnOver = false;
 
         ModulesManager.Get<GlobalUpdate>().Register(this);
@@ -61,6 +61,7 @@ public class BattleManager : IUpdate
 
     public void OnDestroy()
     {
+        ModulesManager.Get<GlobalUpdate>()?.Unregister(this);
         onDispose();
     }
 }

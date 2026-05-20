@@ -8,11 +8,10 @@ public class PlayerHealth : MonoBehaviour, IBeHit
     public float currentHp;
     public TextMeshProUGUI playerHealthText;
     public PlayerManager pm;
-
-    void Start()
-    {
-    }
-
+    
+    public int shield;
+    public WaterShieldEffect shieldFx;
+    
     public void Initialize(PlayerManager pm)
     {
         this.pm = pm;
@@ -48,6 +47,17 @@ public class PlayerHealth : MonoBehaviour, IBeHit
 
     private void TakeDamage(float damage)
     {
+        if (shield > 0)
+        {
+            shield--;
+            if (shield <= 0)
+            {
+                shieldFx?.HideShield();
+                shieldFx = null;
+            }
+            return;
+        }
+        
         currentHp -= damage;
         if (currentHp <= 0)
         {

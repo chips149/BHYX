@@ -85,6 +85,11 @@ public class PlayerManager
         
         bulletCount = baseProperty.maxBulletCount;
         player.UpdateBulletUI();
+
+        if (SaveManager.HasLoadedSave)
+        {
+            SaveManager.ReplayChosenCards();
+        }
     }
 
     public void NotifyBulletHit()
@@ -114,7 +119,7 @@ public class PlayerManager
         var isCrit = UnityEngine.Random.Range(0, 100) <= baseProperty.critRate;
         var finalDamage = baseProperty.damage * (isCrit ? baseProperty.critDamage : 1);
 
-        return finalDamage;
+        return Mathf.RoundToInt(finalDamage);
     }
 
     public void UpdateProperty()

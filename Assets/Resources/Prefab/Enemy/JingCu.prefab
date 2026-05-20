@@ -78,7 +78,7 @@ MonoBehaviour:
   maxHp: 3
   enemyText: {fileID: 4545667917077290256}
   isDead: 0
-  speed: 5.2
+  speed: 4
   distance: 2
   beHitPrefab: {fileID: 2573299389108372027}
   attackPrefab: {fileID: 7213333319754235148}

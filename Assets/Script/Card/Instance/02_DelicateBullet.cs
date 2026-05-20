@@ -6,7 +6,7 @@ public class DelicateBulletCardData : CardData
         var pp = GameState.Pm.baseProperty;
         pp.critDamage += 20 * pp.critDamageCorrection;
         pp.bulletReloadTime *=0.95f;
-        pp.bulletScale -=0.1f;
+        pp.bulletScale *= 0.90f;
         GameState.Pm.UpdateProperty();
     }
 }

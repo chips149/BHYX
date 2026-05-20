@@ -57,7 +57,14 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.98803747
+      - time: 0.6619667
+        functionName: Atk
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.9731952
         functionName: Disappear
         data: 
         objectReferenceParameter: {instanceID: 0}

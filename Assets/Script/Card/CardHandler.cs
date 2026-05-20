@@ -58,7 +58,6 @@ public static class CardHandler
 
     public static CardData[] RandomCardData()
     {
-        // 算法 
         return Data.OrderBy(value => value.Priority()).ToArray();
     }
 }
@@ -92,6 +91,8 @@ public abstract class CardData
     }
 
     public abstract void OnChosen();
+
+    public virtual void OnReplay() { }
 }
 
 

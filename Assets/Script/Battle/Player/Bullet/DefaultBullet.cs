@@ -49,6 +49,7 @@ public class DefaultBullet : MonoBehaviour
             transform.position = pos;
 
             await UniTask.Yield();
+            if (this == null) return;
             t += Time.deltaTime;
         }
 

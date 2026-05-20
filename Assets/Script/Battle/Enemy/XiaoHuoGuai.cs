@@ -5,6 +5,7 @@ public class XiaoHuoGuai : EnemyBase
 {
     public ParticleSystem dieEffect;
     public ParticleSystem atkEffect;
+    public GameObject enemyPrefab;
     // movement
     private bool isMove;
 
@@ -24,6 +25,7 @@ public class XiaoHuoGuai : EnemyBase
 
     public void Atk()
     {
+        enemyPrefab.SetActive(false);
         atkEffect.Play();
     }
 

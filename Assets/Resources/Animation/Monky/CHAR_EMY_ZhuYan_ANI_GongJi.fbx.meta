@@ -36,7 +36,7 @@ ModelImporter:
       name: ATK
       takeName: Take 001
       internalID: 1827226128182048838
-      firstFrame: 0
+      firstFrame: 10
       lastFrame: 40
       wrapMode: 0
       orientationOffsetY: 0
@@ -57,7 +57,14 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.917757
+      - time: 0.6808619
+        functionName: Atk
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 1
         functionName: Disappear
         data: 
         objectReferenceParameter: {instanceID: 0}

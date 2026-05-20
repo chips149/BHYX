@@ -28,6 +28,10 @@ namespace Framework{
             _updates.Add(update);
         }
 
+        public void Unregister(IUpdate update){
+            _updates.Remove(update);
+        }
+
         private void Update(){
             var temp = _updates.ToList();
             foreach (var update in temp){
