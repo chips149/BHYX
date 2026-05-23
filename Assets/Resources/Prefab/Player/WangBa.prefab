@@ -552,6 +552,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   offsetZ: 4
+  spawnEffect: {fileID: 3494571459410361629, guid: d464c8dad8ffed44d8ab737aa0d999c7, type: 3}
 --- !u!95 &8544294219959691401
 Animator:
   serializedVersion: 5

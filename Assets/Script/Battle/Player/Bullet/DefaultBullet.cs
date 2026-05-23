@@ -86,12 +86,18 @@ public class DefaultBullet : MonoBehaviour
                 afterHit = AfterHit
             });
         }
-        
+
         if (hitEnemy)
+        {
             pm.NotifyBulletHit();
+            SoundManager.Play("Audio/SFX/Player/BulletHit",0.6f);
+        }
         else
+        {
             pm.NotifyBulletMiss();
-        
+            SoundManager.Play("Audio/SFX/Player/BulletLand",0.6f);
+        }
+
         for (var i = 0; i < size; i++)
         {
             var firePlane = results[i].GetComponent<FirePlane>();

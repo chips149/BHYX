@@ -16,12 +16,11 @@ public class SaveManager
         if (GameState.Pm != null)
         {
             SaveData.Instance.playerProperty = GameState.Pm.baseProperty;
-            if (GameState.Pm.playerHealth != null)
-            {
-                SaveData.Instance.currentHp = Mathf.RoundToInt(GameState.Pm.playerHealth.currentHp);
-                SaveData.Instance.shield = GameState.Pm.playerHealth.shield;
-            }
+            SaveData.Instance.currentHp = Mathf.RoundToInt(GameState.Pm.playerHealth.currentHp);
+            SaveData.Instance.shieldCardLevel = GameState.Pm.playerHealth.shieldCardLevel;
         }
+
+        SaveData.Instance.sessionCoin = CoinSystem.sessionCoin;
 
         var json = JsonUtility.ToJson(SaveData.Instance, true);
         File.WriteAllText(SavePath, json);
@@ -88,8 +87,9 @@ public class SaveManager
         SaveData.New();
         ApplyToGameState();
         HasLoadedSave = false;
-
-        // 重置卡牌静态状态
+        
+        CoinSystem.ResetSession();
+        
         WaterTornado.hasWaterTornado = false;
     }
     
@@ -101,14 +101,8 @@ public class SaveManager
         var cardMap = CardHandler.Data.ToDictionary(c => c.id, c => c);
         foreach (var cardId in SaveData.Instance.chosenCardIds)
         {
-            if (cardMap.TryGetValue(cardId, out var cardData))
-            {
+            if (cardMap.TryGetValue(cardId, out var cardData)) 
                 cardData.OnReplay();
-            }
-            else
-            {
-                Debug.LogWarning($"SaveManager: 找不到卡牌ID {cardId}，跳过重放");
-            }
         }
     }
 
@@ -116,5 +110,6 @@ public class SaveManager
     {
         GameState.currentLevel = SaveData.Instance.currentLevel;
         GameState.playerPath = SaveData.Instance.playerPath;
+        CoinSystem.sessionCoin = SaveData.Instance.sessionCoin;
     }
 }

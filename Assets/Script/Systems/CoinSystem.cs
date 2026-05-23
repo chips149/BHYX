@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public static class CoinSystem
@@ -16,16 +14,27 @@ public static class CoinSystem
     public static void AddCoin(int amount)
     {
         sessionCoin += amount;
-        PlayerPrefs.SetInt(Key,GetCoin()+amount);
-        PlayerPrefs.Save();
     }
-
+    
+    public static void CommitSessionCoins()
+    {
+        if (sessionCoin <= 0) return;
+        PlayerPrefs.SetInt(Key, GetCoin() + sessionCoin);
+        PlayerPrefs.Save();
+        sessionCoin = 0;
+    }
+    
+    public static void ResetSession()
+    {
+        sessionCoin = 0;
+    }
+    
     public static bool SpendCoin(int amount)
     {
         int current = GetCoin();
-        if(current<amount)return false; 
+        if (current < amount) return false;
         
-        PlayerPrefs.SetInt(Key,current-amount);
+        PlayerPrefs.SetInt(Key, current - amount);
         PlayerPrefs.Save();
         return true;
     }
@@ -33,5 +42,6 @@ public static class CoinSystem
     public static void Reset()
     {
         PlayerPrefs.DeleteKey(Key);
+        sessionCoin = 0;
     }
 }

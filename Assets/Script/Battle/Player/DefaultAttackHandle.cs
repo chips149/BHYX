@@ -21,5 +21,7 @@ public class DefaultAttackHandle : AttackHandle
     {
         pm.lastAimPos = aimPos;
         DefaultBullet.Shoot(startPos, aimPos, pm);
+        
+        SoundManager.Play("Audio/SFX/Player/BulletLaunch",  0.5f);
     }
 }

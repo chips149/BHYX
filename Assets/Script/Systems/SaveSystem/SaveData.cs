@@ -9,7 +9,8 @@ public class SaveData
     public int currentLevel = 1;
     public string playerPath = "";
     public int currentHp;
-    public int shield;
+    public int shieldCardLevel;
+    public int sessionCoin;
 
     public PlayerProperty playerProperty = new();
     public List<int> chosenCardIds = new();

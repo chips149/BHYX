@@ -14,6 +14,9 @@ public class GameUIManager : MonoBehaviour
     public Text winText;
     public Text loseText;
 
+    [Header("卡牌结算")]
+    [SerializeField] private CardSettlementUI cardSettlementUI;
+
     private void Awake()
     {
         instance = this;
@@ -24,12 +27,24 @@ public class GameUIManager : MonoBehaviour
         winPanel.SetActive(true);
         GameState.isGameOver = true;
         winText.text = $"获得火晶:{CoinSystem.sessionCoin}";
+
+        ShowCardSettlement();
     }
     public void Lose()
     {
         losePanel.SetActive(true);
         GameState.isGameOver = true;
         loseText.text=$"获得火晶:{CoinSystem.sessionCoin}";
+
+        ShowCardSettlement();
+    }
+
+    private void ShowCardSettlement()
+    {
+        if (cardSettlementUI != null)
+            cardSettlementUI.Show();
+        else
+            FindObjectOfType<CardSettlementUI>(true)?.Show();
     }
     
     public void OnBootClicked()

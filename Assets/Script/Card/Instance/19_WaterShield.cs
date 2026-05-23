@@ -1,8 +1,7 @@
-using System.Resources;
 using UnityEngine;
 using System.Collections;
 
-[CardProperty(19, "水盾", "", "每40秒获得一层护盾（上限1层）,攻击力-2,子弹回复速度+15%")]
+[CardProperty(19, "水盾", "", "每40秒获得一次护盾（+10血），攻击力-2，子弹回复速度+15%，每次选卡护盾值+5")]
 
 public class WaterShield : CardData
 {
@@ -15,31 +14,45 @@ public class WaterShield : CardData
         pp.bulletReloadTime *= 0.85f;
         GameState.Pm.UpdateProperty();
 
-        ph.shield = 1;
+        ph.shieldCardLevel++;
+        int bonus = 10 + (ph.shieldCardLevel - 1) * 5;
+
         CreateShieldEffect(ph);
+
+        if (ph.shieldActive)
+        {
+            ph.RemoveShield();
+        }
+        ph.ApplyShield(bonus);
+
         ph.StartCoroutine(ShieldRoutine(ph));
     }
 
     public override void OnReplay()
     {
         var ph = GameState.Pm.playerHealth;
-        ph.shield = SaveData.Instance.shield;
-        if (ph.shield > 0)
+        ph.shieldCardLevel = SaveData.Instance.shieldCardLevel;
+
+        if (ph.shieldCardLevel > 0)
         {
+            int bonus = 10 + (ph.shieldCardLevel - 1) * 5;
             CreateShieldEffect(ph);
+            ph.ApplyShield(bonus);
         }
+
         ph.StartCoroutine(ShieldRoutine(ph));
     }
 
     private static void CreateShieldEffect(PlayerHealth ph)
     {
+        if (ph.shieldFx != null) return;
+
         var prefab = Resources.Load<WaterShieldEffect>("Prefab/Item/WaterShield");
         var playerTrans = GameState.Pm.player.transform;
         var point = playerTrans.Find("WaterShieldPoint");
         
         var effect = Object.Instantiate(prefab, point.position, point.rotation, point);
         ph.shieldFx = effect;
-        effect.ShowShield();
     }
     
     public static IEnumerator ShieldRoutine(PlayerHealth ph)
@@ -47,10 +60,10 @@ public class WaterShield : CardData
         while (true)
         {
             yield return new WaitForSeconds(40f);
-            if (ph.shield < 1)
+            if (!ph.shieldActive && ph.shieldCardLevel > 0)
             {
-                ph.shield = 1;
-                ph.shieldFx?.ShowShield(); 
+                int bonus = 10 + (ph.shieldCardLevel - 1) * 5;
+                ph.ApplyShield(bonus);
             }
         }
     }

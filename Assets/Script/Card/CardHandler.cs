@@ -51,6 +51,7 @@ public static class CardHandler
         var cardData = Activator.CreateInstance(type) as CardData;
         Assert.IsNotNull(cardData);
         cardData.id = attr.id;
+        cardData.name = attr.name;
         cardData.imgPath = attr.imgPath;
         cardData.description = attr.description;
         return cardData;
@@ -82,6 +83,7 @@ public class CardPropertyAttribute : Attribute
 public abstract class CardData
 {
     public int id;
+    public string name;
     public string imgPath;
     public string description;
 

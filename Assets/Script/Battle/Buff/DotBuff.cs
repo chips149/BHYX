@@ -29,6 +29,5 @@ public class DotBuff : GameplayEffect, IGameplayEvent<FrameData>
         {
             finish = true;
         }
-        //
     }
 }

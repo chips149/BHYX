@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Framework.Gameplay;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public abstract class PlayerBase : MonoBehaviour
 {
@@ -46,6 +47,8 @@ public abstract class PlayerBase : MonoBehaviour
 
     public void Tick(float dt)
     {
+        if (EventSystem.current.IsPointerOverGameObject()) return;
+        
         AutoReloadBullet(dt);
         UpdateAttackCooldown(dt);
 
