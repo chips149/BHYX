@@ -87,17 +87,11 @@ public class SpawnMonsterHandler : MonoBehaviour
         if (id == 0) return; 
         //var prefab = prefabs[id];
         
-        if (!prefabs.TryGetValue(id, out var prefab))
+        if (!prefabs.TryGetValue(id, out var prefab) || prefab == null)
         {
-            Debug.LogError($"SpawnMonsterHandler: 怪物ID {id} 没有对应的预设体");
             return;
         }
-        if (prefab == null)
-        {
-            Debug.LogError($"SpawnMonsterHandler: 怪物ID {id} 的预设体为 null");
-            return;
-        }
-        
+
         Instantiate(prefab, position, Quaternion.Euler(0, 180, 0));
     }
 

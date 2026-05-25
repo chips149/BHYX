@@ -32,27 +32,17 @@ public class CardSettlementUI : MonoBehaviour
     public void Show()
     {
         var cardIds = SaveData.Instance.chosenCardIds;
-        Debug.Log($"[CardSettlementUI] chosenCardIds 数量={cardIds?.Count ?? 0}");
         if (cardIds == null || cardIds.Count == 0)
         {
             gameObject.SetActive(false);
             return;
         }
 
-        if (itemPrefab == null) { Debug.LogError("[CardSettlementUI] itemPrefab 未赋值"); return; }
-        if (contentParent == null) { Debug.LogError("[CardSettlementUI] contentParent 未赋值"); return; }
-        if (CardHandler.Data == null || CardHandler.Data.Length == 0) { Debug.LogError("[CardSettlementUI] CardHandler.Data 为空"); return; }
+        if (itemPrefab == null || contentParent == null || CardHandler.Data == null || CardHandler.Data.Length == 0) { gameObject.SetActive(false); return; }
 
         gameObject.SetActive(true);
         transform.SetAsLastSibling();
         Canvas.ForceUpdateCanvases();
-
-        // 调试：检查 contentParent 是否在 Canvas 下
-        var canvas = contentParent.GetComponentInParent<Canvas>();
-        if (canvas == null)
-            Debug.LogError("[CardSettlementUI] contentParent 不在 Canvas 下！UI 不会被渲染！");
-        else
-            Debug.Log($"[CardSettlementUI] 找到 Canvas: {canvas.name}, RenderMode={canvas.renderMode}");
 
         ClearCards();
         DisableParentLayoutComponents();

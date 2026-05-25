@@ -33,7 +33,6 @@ public class BattleManager : IUpdate
         GameState.onWaveSpawnOver = (count, total) =>
         {
             LevelWaveUI.instance.RefreshUI(GameState.currentLevel, count, total);
-            Debug.Log("onWaveEnd");
         };
 
         GameState.onSpawnComplete = () => { GameState.spawnOver = true; };
