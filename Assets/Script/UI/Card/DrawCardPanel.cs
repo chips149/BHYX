@@ -6,6 +6,9 @@ public class DrawCardPanel : MonoBehaviour
     private CardViewer[] _viewers;
     [SerializeField] private Button refreshButton;
 
+    private int _selectedIndex = -1;
+    private CardData _selectedCardData;
+
     void RandomCard()
     {
         _viewers ??= transform.GetComponentsInChildren<CardViewer>();
@@ -14,6 +17,22 @@ public class DrawCardPanel : MonoBehaviour
         {
             _viewers[i].Initialize(this, i, data[i]);
         }
+        _selectedIndex = -1;
+        _selectedCardData = null;
+    }
+
+    public void OnCardSelected(int index, CardData cardData)
+    {
+        _selectedIndex = index;
+        _selectedCardData = cardData;
+    }
+
+    public void ConfirmSelection()
+    {
+        if (_selectedCardData == null) return;
+        SaveData.AddCard(_selectedCardData.id);
+        _selectedCardData.OnChosen();
+        CloseDrawCardPanel();
     }
 
     public void OpenDrawCardPanel()

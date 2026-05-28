@@ -1,10 +1,12 @@
 using UnityEngine;
 using System.Collections;
 
-[CardProperty(19, "水盾", "", "每40秒获得一次护盾（+10血），攻击力-2，子弹回复速度+15%，每次选卡护盾值+5")]
+[CardProperty(19, "水盾", "", "每40秒刷新水盾\n攻击力-2\n子弹回复速度+15%",isSkillCard = true)]
 
 public class WaterShield : CardData
 {
+    public override string detailText => "每40秒刷新一次抵消10伤害的水盾\n攻击力-2\n子弹回复速度+15%";
+
     public override void OnChosen()
     {
         var pp = GameState.Pm.baseProperty;

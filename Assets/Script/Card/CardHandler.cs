@@ -54,6 +54,7 @@ public static class CardHandler
         cardData.name = attr.name;
         cardData.imgPath = attr.imgPath;
         cardData.description = attr.description;
+        cardData.isSkillCard = attr.isSkillCard;
         return cardData;
     }
 
@@ -70,6 +71,7 @@ public class CardPropertyAttribute : Attribute
     public string name;
     public string imgPath;
     public string description;
+    public bool isSkillCard;
 
     public CardPropertyAttribute(int id, string name, string imgPath, string description)
     {
@@ -86,14 +88,13 @@ public abstract class CardData
     public string name;
     public string imgPath;
     public string description;
-
+    public bool isSkillCard;
+    public virtual string detailText => description;
     public virtual int Priority()
     {
         return UnityEngine.Random.Range(0, 100);
     }
-
     public abstract void OnChosen();
-
     public virtual void OnReplay() { }
 }
 

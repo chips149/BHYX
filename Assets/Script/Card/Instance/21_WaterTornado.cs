@@ -1,11 +1,13 @@
 using UnityEngine;
 
-[CardProperty(21, "水龙卷", "", "怪物死亡后30%概率向后生成水龙卷（攻击力20%伤害），暴击率+10%，子弹大小+15%")]
+[CardProperty(21, "水龙卷", "", "杀敌概率生成水龙卷\n暴击率+10%\n子弹大小+15%",isSkillCard = true)]
 public class WaterTornado : CardData
 {
     public static bool hasWaterTornado;
 
     private static WaterTornadoProjectile prefab;
+
+    public override string detailText => "怪物死亡后30%会向后生成一个伤害为攻击力20%水龙卷\n暴击率+10%\n子弹大小+15%";
 
     public override void OnChosen()
     {
