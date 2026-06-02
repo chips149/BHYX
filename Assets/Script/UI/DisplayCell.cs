@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,7 +11,7 @@ public class DisplayCell : MonoBehaviour
     public Sprite displayIcon;
     public string mwName;
     public string description;
-    public string detail;
+    public string boostAdjust;
 
     public Button self;
 
@@ -25,12 +23,10 @@ public class DisplayCell : MonoBehaviour
     public void Initialize(MagicWeaponPanel manager, ConfigInfo info)
     {
         _manager = manager;
-        //
         mwName = info.name;
         img.sprite = Resources.Load<Sprite>(info.imgPath);
-        displayIcon = Resources.Load<Sprite>(info.iconPath);
         description = info.description;
-        detail = info.detail;
+        boostAdjust = info.boostAdjust;
     }
 
     public void OnClick()

@@ -10,19 +10,7 @@ public class YuHuanPlayer : PlayerBase
     {
         base.Initialize(pm);
 
-        pm.baseProperty.damage = 1;
-        pm.baseProperty.attackInterval = 0.5f;
-        pm.baseProperty.maxBulletCount = 10;
-        pm.baseProperty.bulletReloadTime = 1f;
-        pm.baseProperty.bulletScale = 2;
-        pm.baseProperty.maxHp = 30;
-        pm.baseProperty.critRate = 5;
-        pm.baseProperty.critDamage = 1.6f;
-        pm.baseProperty.maxSpread = 5;
-        pm.baseProperty.minSpread = 3;
-
-        pm.baseProperty.attackIntervalCorrection = 1.5f;
-
+        pm.baseProperty = MagicWeaponLevelUpSystem.GetBaseProperty("YuHuan");
         int level = MagicWeaponLevelUpSystem.GetLevel("YuHuan");
         MagicWeaponLevelUpSystem.ApplyUpLevel(pm.baseProperty, level);
 

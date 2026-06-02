@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -15,8 +14,7 @@ public class ConfigAsset : ScriptableObject
 public struct ConfigInfo
 {
     public string imgPath;
-    public string iconPath;
     public string name;
     public string description;
-    public string detail;
+    public string boostAdjust;
 }

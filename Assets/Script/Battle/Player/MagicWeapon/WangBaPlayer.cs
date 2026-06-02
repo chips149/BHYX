@@ -10,20 +10,7 @@ public class WangBaPlayer : PlayerBase
     {
         base.Initialize(pm);
 
-        pm.baseProperty.damage = 1;
-        pm.baseProperty.attackInterval = 1;
-        pm.baseProperty.maxBulletCount = 5;
-        pm.baseProperty.bulletReloadTime = 0.8f;
-        pm.baseProperty.bulletScale = 2;
-        pm.baseProperty.maxHp = 25;
-        pm.baseProperty.critRate = 5;
-        pm.baseProperty.critDamage = 1.5f;
-        pm.baseProperty.maxSpread = 3;
-        pm.baseProperty.minSpread = 2;
-
-        pm.baseProperty.damageCorrection = 1.25f;
-        pm.baseProperty.attackIntervalCorrection = 1.25f;
-
+        pm.baseProperty = MagicWeaponLevelUpSystem.GetBaseProperty("WangBa");
         int level = MagicWeaponLevelUpSystem.GetLevel("WangBa");
         MagicWeaponLevelUpSystem.ApplyUpLevel(pm.baseProperty, level);
 
