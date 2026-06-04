@@ -91,10 +91,10 @@ Material:
     - _Float15: 1
     - _Float16: 1.1
     - _Float17: 0.3
-    - _Float2: 1
-    - _Float3: 1
-    - _Float4: 1
-    - _Float5: 1
+    - _Float2: 0.36
+    - _Float3: 8
+    - _Float4: 1.39
+    - _Float5: 0.5
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
@@ -111,6 +111,6 @@ Material:
     - __dirty: 0
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _Color0: {r: 0.66626626, g: 1.5438982, b: 2.2981362, a: 1}
+    - _Color0: {r: 0.22241008, g: 0.5992823, b: 0.9245283, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []

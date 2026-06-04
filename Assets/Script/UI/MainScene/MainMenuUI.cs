@@ -9,7 +9,7 @@ public class MainMenuUI : MonoBehaviour
 
     public void OnEnable()
     {
-        CoinText.text = $"火晶：{CoinSystem.GetCoin()}";
+        CoinText.text = $"{CoinSystem.GetCoin()}";
     }
 
     public void OnStartGameClicked()

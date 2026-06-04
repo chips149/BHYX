@@ -53,6 +53,17 @@ public class CardViewer : MonoBehaviour
     {
         _drawCardPanel.OnCardSelected(_index, _cardData);
     }
+    public void SetSelected(bool selected)
+    {
+        if (selected)
+        {
+            cardRoot.DOScale(1.1f, 0.23f).SetEase(Ease.OutBack);
+        }
+        else
+        {
+            cardRoot.DOScale(1f, 0.2f).SetEase(Ease.OutQuad);
+        }
+    }
     public void OnDetailButtonClicked()
     {
         if (_isFlipping) return;

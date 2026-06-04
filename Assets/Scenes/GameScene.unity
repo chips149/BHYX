@@ -10428,6 +10428,9 @@ MonoBehaviour:
   - {fileID: 360367343}
   monsterConfig: {fileID: 4900000, guid: 27e76ccfbec176f48a48c4464020a2f0, type: 3}
   difficultyConfig: {fileID: 4900000, guid: c8ef7d6311ab447439b88de5679b2384, type: 3}
+  roundInterval: 10
+  hpGrowthPerTier: 0.2
+  speedGrowthPerTier: 0.1
 --- !u!4 &785823327
 Transform:
   m_ObjectHideFlags: 0

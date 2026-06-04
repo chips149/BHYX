@@ -9,31 +9,39 @@ public class NoCoinAnimation : MonoBehaviour
     public float holdDuration = 0.8f;
     public float fadeDuration = 0.3f;
 
-    private RectTransform rect;
-    private CanvasGroup canvasGroup;
-    private Vector2 originPos;
+    private Sequence _currentSeq;
 
     public void Play(GameObject targetImage)
     {
-        rect = targetImage.GetComponent<RectTransform>();
-        canvasGroup = targetImage.GetComponent<CanvasGroup>();
-        if (canvasGroup == null) canvasGroup = targetImage.AddComponent<CanvasGroup>();
+        if (_currentSeq != null && _currentSeq.IsActive())
+        {
+            _currentSeq.Kill(false);
+            var oldGroup = targetImage.GetComponent<CanvasGroup>();
+            if (oldGroup != null) oldGroup.alpha = 1f;
+            targetImage.SetActive(false);
+        }
 
-        originPos = rect.anchoredPosition;
+        var rect = targetImage.GetComponent<RectTransform>();
+        var group = targetImage.GetComponent<CanvasGroup>();
+        if (group == null) group = targetImage.AddComponent<CanvasGroup>();
+
+        var originPos = rect.anchoredPosition;
 
         targetImage.SetActive(true);
-        canvasGroup.alpha = 1f;
+        group.alpha = 1f;
         rect.anchoredPosition = new Vector2(originPos.x, originPos.y - slideUpDistance);
 
-        Sequence seq = DOTween.Sequence();
-        seq.Append(rect.DOAnchorPosY(originPos.y, slideDuration).SetEase(Ease.OutBack));
-        seq.AppendInterval(holdDuration);
-        seq.Append(canvasGroup.DOFade(0f, fadeDuration));
-        seq.OnComplete(() =>
+        _currentSeq = DOTween.Sequence();
+        _currentSeq.Append(rect.DOAnchorPosY(originPos.y, slideDuration).SetEase(Ease.OutBack));
+        _currentSeq.AppendInterval(holdDuration);
+        _currentSeq.Append(group.DOFade(0f, fadeDuration));
+        _currentSeq.OnComplete(() =>
         {
+            if (targetImage == null) return;
             targetImage.SetActive(false);
             rect.anchoredPosition = originPos;
-            canvasGroup.alpha = 1f;
+            group.alpha = 1f;
+            _currentSeq = null;
         });
     }
 }

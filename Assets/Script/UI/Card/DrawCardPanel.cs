@@ -25,6 +25,11 @@ public class DrawCardPanel : MonoBehaviour
     {
         _selectedIndex = index;
         _selectedCardData = cardData;
+
+        for (int i = 0; i < _viewers.Length; i++)
+        {
+            _viewers[i].SetSelected(i == index);
+        }
     }
 
     public void ConfirmSelection()

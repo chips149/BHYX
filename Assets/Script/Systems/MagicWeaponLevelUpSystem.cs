@@ -152,7 +152,7 @@ public static class MagicWeaponLevelUpSystem
         var cost = GetUpgradeCost(currentLevel);
         var coin = CoinSystem.GetCoin();
         var color = coin >= cost ? "green" : "red";
-        return $"升级消耗：<color={color}>{cost}</color> 金币   当前金币：{coin}";
+        return $"：<color={color}>{cost}</color> 金币   当前金币：{coin}";
     }
 
     public static string GetUpgradePreview(string weaponName, int currentLevel)

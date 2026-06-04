@@ -11,6 +11,11 @@ public class SpawnMonsterHandler : MonoBehaviour
     public TextAsset monsterConfig;
     public TextAsset difficultyConfig;
 
+    [Header("怪物属性提升")] 
+    public int roundInterval = 10;
+    public float hpGrowthPerTier = 0.2f;
+    public float speedGrowthPerTier = 0.1f;
+
     private readonly List<List<int>> levelData = new();
     private readonly List<List<List<List<int>>>> data = new();
 
@@ -30,7 +35,15 @@ public class SpawnMonsterHandler : MonoBehaviour
     {
         if (GameState.currentLevel >= levelData.Count)
         {
-            GameUIManager.instance.Win();
+            if (GameState.isEndlessMode)
+            {
+                GameState.spawnOver = false;
+                _ = SpawnEndlessLevel();
+            }
+            else
+            {
+                GameUIManager.instance.Win();
+            }
             return;
         }
 
@@ -56,6 +69,29 @@ public class SpawnMonsterHandler : MonoBehaviour
             await SpawnWave(waveHardness, Random.Range(4, 6));
         }
         
+        GameState.onSpawnComplete?.Invoke();
+    }
+
+    private async UniTask SpawnEndlessLevel()
+    {
+        var round = GameState.currentLevel - levelData.Count + 1;
+
+        var waveCount = Mathf.Clamp(3 + round / 3, 3, 10);
+        var rowsPerWave = Mathf.Clamp(4 + round / 2, 4, 12);
+
+        var hardnessPool = new int[] { 0, 1, 2, 4 };
+        var startIndex = (round - 1) % 4;
+
+        LevelWaveUI.instance?.RefreshUI(GameState.currentLevel, 0, waveCount);
+        for (int i = 0; i < waveCount; i++)
+        {
+            if (GameState.isGameOver) return;
+
+            var hardness = hardnessPool[(startIndex + i) % 4];
+            GameState.onWaveSpawnOver?.Invoke(i + 1, waveCount);
+            await SpawnWave(hardness, rowsPerWave);
+        }
+
         GameState.onSpawnComplete?.Invoke();
     }
 
@@ -92,7 +128,16 @@ public class SpawnMonsterHandler : MonoBehaviour
             return;
         }
 
-        Instantiate(prefab, position, Quaternion.Euler(0, 180, 0));
+        var enemy = Instantiate(prefab, position, Quaternion.Euler(0, 180, 0));
+
+        var tier = (GameState.currentLevel - 1) / roundInterval;
+        if (tier > 0)
+        {
+            enemy.hp = Mathf.RoundToInt(enemy.hp * (1.0f + tier * hpGrowthPerTier));
+            enemy.maxHp = enemy.hp;
+            enemy.speed *= (1.0f + tier * speedGrowthPerTier);
+            enemy.UpdateHealthDisplay();
+        }
     }
 
     private List<List<int>> Rand(int hardness, int total)

@@ -114,4 +114,5 @@ public static class GameState
     public static int currentLevel = 1;
     public static bool spawnOver = false;
     public static bool isGameOver = false;
+    public static bool isEndlessMode;
 }
