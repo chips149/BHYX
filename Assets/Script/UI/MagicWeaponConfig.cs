@@ -3,18 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
-[CreateAssetMenu(fileName = "Custom Config",menuName = "")]
-public class ConfigAsset : ScriptableObject
+[CreateAssetMenu(fileName = "MagicWeaponConfig", menuName = "Config/MagicWeapon")]
+public class MagicWeaponConfig : ScriptableObject
 {
     public string prefabPath;
-    public List<ConfigInfo> list;
+    public List<MagicWeaponInfo> list;
 }
 
 [Serializable]
-public struct ConfigInfo
+public struct MagicWeaponInfo
 {
     public string imgPath;
     public string name;
     public string description;
     public string boostAdjust;
 }
+
+

@@ -20,7 +20,7 @@ public class DisplayCell : MonoBehaviour
         self = GetComponent<Button>();
     }
 
-    public void Initialize(MagicWeaponPanel manager, ConfigInfo info)
+    public void Initialize(MagicWeaponPanel manager, MagicWeaponInfo info)
     {
         _manager = manager;
         mwName = info.name;

@@ -9,23 +9,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8aa73ac5f1082614ca1ce5982adf3eec, type: 3}
+  m_Script: {fileID: 11500000, guid: fa2970099d81cdf4387f1bcb90e2505d, type: 3}
   m_Name: MagicWeaponGallery
   m_EditorClassIdentifier: 
   prefabPath: Prefab/UI/DisplayCell
   list:
   - imgPath: UI/WeaponSelector/img_calabash_big
-    name: "\u6CA7\u6D77\u8605"
+    name: "\u6CA7\u6D77\u8861"
     description: "\u9AD8\u989D\u63D0\u5347\u52A0\u6210"
-    boostAdjust: "<color=blue>\u66B4\u51FB\u7387+50%\u4FEE\u6539\u3001\u66B4\u51FB\u4F24\u5BB3+50%\u4FEE\u6539</color>"
-    detail: "\u653B\u51FB\u529B\uFF1A2\n\u653B\u51FB\u95F4\u9694\uFF1A10\n\u5B50\u5F39\u4E0A\u9650\uFF1A5\n\u5B50\u5F39\u56DE\u590D\u901F\u5EA6\uFF1A10\n\u5B50\u5F39\u5927\u5C0F\uFF1A5\n\u6805\u680F\u8840\u91CF\uFF1A35\n\u66B4\u51FB\u7387\uFF1A5%\n\u66B4\u51FB\u4F24\u5BB3\uFF1A+50%\n\u6563\u5E03\u8303\u56F4\uFF1A3~5"
+    boostAdjust: "\u66B4\u51FB\u7387+50%\u4FEE\u6539\u3001\u66B4\u51FB\u4F24\u5BB3+50%\u4FEE\u6539"
   - imgPath: UI/WeaponSelector/img_turtal_big
     name: "\u5DDD\u6E1F\u5370"
-    description: "\u6BCF\u6B21\u7A7A\u67AA\u4E0B\u4E00\u67AA\u4F24\u5BB3+1"
-    boostAdjust: "<color=blue>\u653B\u51FB\u95F4\u9694+50%\u4FEE\u6539</color>"
-    detail: "\u653B\u51FB\u529B\uFF1A1\n\u653B\u51FB\u95F4\u9694\uFF1A10\n\u5B50\u5F39\u4E0A\u9650\uFF1A5\n\u5B50\u5F39\u56DE\u590D\u901F\u5EA6\uFF1A8\n\u5B50\u5F39\u5927\u5C0F\uFF1A5\n\u6805\u680F\u8840\u91CF\uFF1A25\n\u66B4\u51FB\u7387\uFF1A5%\n\u66B4\u51FB\u4F24\u5BB3\uFF1A+50%\n\u6563\u5E03\u8303\u56F4\uFF1A2~3"
+    description: "\u6BCF3\u6B21\u653B\u51FB\u843D\u5370"
+    boostAdjust: "\u653B\u51FB\u95F4\u9694+50%\u4FEE\u6539"
   - imgPath: UI/WeaponSelector/img_dragon_big
     name: "\u78A7\u6CE2\u73CF"
-    description: "\u7A7A\u67AA\u540E\u653B\u51FB\u529B+1"
-    boostAdjust: "<color=blue>\u653B\u51FB+25%\u4FEE\u6539 \u653B\u51FB\u95F4\u9694+25%\u4FEE\u6539</color>"
-    detail: "\u653B\u51FB\u529B\uFF1A1\n\u653B\u51FB\u95F4\u9694\uFF1A8\n\u5B50\u5F39\u4E0A\u9650\uFF1A7\n\u5B50\u5F39\u56DE\u590D\u901F\u5EA6\uFF1A12\n\u5B50\u5F39\u5927\u5C0F\uFF1A5\n\u6805\u680F\u8840\u91CF\uFF1A30\n\u66B4\u51FB\u7387\uFF1A5%\n\u66B4\u51FB\u4F24\u5BB3\uFF1A+50%\n\u6563\u5E03\u8303\u56F4\uFF1A5~7"
+    description: "\u6BCF\u6B21\u7A7A\u67AA\u4E0B\u4E00\u67AA\u4F24\u5BB3+1"
+    boostAdjust: "\u653B\u51FB\u529B+25%\u4FEE\u6539\u3001\u653B\u51FB\u95F4\u9694+25%\u4FEE\u6539"

@@ -1,21 +1,23 @@
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 
 public class MagicWeaponPanel : MonoBehaviour
 {
-    public ConfigAsset displayAsset;
+    public MagicWeaponConfig display;
 
     [Header("Reference")]
-    public Text nameText;
-    public Text description;
-    public Text boostAdjust;
-    public Text detail;
-    public Text bonusPreview;
-    public Text upgradeCost;
+    public TMP_Text nameText;
+    public TMP_Text description;
+    public TMP_Text boostAdjust;
+    public TMP_Text detail;
+    public TMP_Text bonusPreview;
+    public TMP_Text upgradeCost;
     public Button upgradeButton;
     public GameObject noHaveCoinImage;
 
@@ -41,11 +43,11 @@ public class MagicWeaponPanel : MonoBehaviour
 
     private void Initialize()
     {
-        var prefab = Resources.Load<DisplayCell>(displayAsset.prefabPath);
+        var prefab = Resources.Load<DisplayCell>(display.prefabPath);
 
-        for (var i = 0; i < displayAsset.list.Count; i++)
+        for (var i = 0; i < display.list.Count; i++)
         {
-            var info = displayAsset.list[i];
+            var info = display.list[i];
             var behavior = Instantiate(prefab, parent.transform);
             behavior.id = i;
             behavior.Initialize(this, info);

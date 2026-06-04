@@ -137,10 +137,9 @@ public static class MagicWeaponLevelUpSystem
     public static string GetDetailText(string weaponName, int level)
     {
         var property = GetPropertyAtLevel(weaponName, level);
-        return $"等级：{level}\n" +
-               $"攻击力：{Format(property.damage)}   攻击间隔：{Format(property.attackInterval)}\n" +
-               $"子弹上限：{property.maxBulletCount}   子弹回复速度：{Format(property.bulletReloadTime)}秒   子弹大小：{Format(property.bulletScale)}\n" +
-               $"栅栏血量：{Format(property.maxHp)}   暴击率：{Format(property.critRate)}%   暴击伤害：+{Format((property.critDamage - 1f) * 100f)}%\n" +
+        return $"攻击力：{Format(property.damage)}\n攻击间隔：{Format(property.attackInterval)}\n" +
+               $"子弹上限：{property.maxBulletCount}\n子弹回复速度：{Format(property.bulletReloadTime)}秒\n子弹大小：{Format(property.bulletScale)}\n" +
+               $"栅栏血量：{Format(property.maxHp)}\n暴击率：{Format(property.critRate)}%\n暴击伤害：+{Format((property.critDamage - 1f) * 100f)}%\n" +
                $"散布范围：{Format(property.minSpread)}~{Format(property.maxSpread)}";
     }
 
@@ -152,7 +151,7 @@ public static class MagicWeaponLevelUpSystem
         var cost = GetUpgradeCost(currentLevel);
         var coin = CoinSystem.GetCoin();
         var color = coin >= cost ? "green" : "red";
-        return $"：<color={color}>{cost}</color> 金币   当前金币：{coin}";
+        return $": <color={color}>{cost}</color>";
     }
 
     public static string GetUpgradePreview(string weaponName, int currentLevel)
