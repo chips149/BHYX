@@ -5,8 +5,6 @@ using System.Collections;
 
 public class WaterShield : CardData
 {
-    public override string detailText => "每40秒刷新一次抵消10伤害的水盾\n攻击力-2\n子弹回复速度+15%";
-
     public override void OnChosen()
     {
         var pp = GameState.Pm.baseProperty;
@@ -19,12 +17,11 @@ public class WaterShield : CardData
         ph.shieldCardLevel++;
         int bonus = 10 + (ph.shieldCardLevel - 1) * 5;
 
-        CreateShieldEffect(ph);
-
         if (ph.shieldActive)
         {
             ph.RemoveShield();
         }
+        CreateShieldEffect(ph);
         ph.ApplyShield(bonus);
 
         ph.StartCoroutine(ShieldRoutine(ph));

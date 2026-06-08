@@ -22,9 +22,6 @@ public class SaveData
 
     public static void AddCard(int cardId)
     {
-        if (!Instance.chosenCardIds.Contains(cardId))
-        {
-            Instance.chosenCardIds.Add(cardId);
-        }
+        Instance.chosenCardIds.Add(cardId);
     }
 }

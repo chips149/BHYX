@@ -47,15 +47,10 @@ public class GameUIManager : MonoBehaviour
             FindObjectOfType<CardSettlementUI>(true)?.Show();
     }
     
-    public void OnBootClicked()
-    {
-        GameState.isGameOver = false;
-        SceneManager.LoadScene("BootScene");
-    }
-
     public void OnMainMenuClicked()
     {
         GameState.isGameOver = false;
+        SaveManager.ClearPersistedSaveForNewGame();
         SceneManager.LoadScene("MainMenuScene");
     }
 }

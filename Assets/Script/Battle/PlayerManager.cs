@@ -135,8 +135,8 @@ public class PlayerManager
         finalProperty.maxHp = baseProperty.maxHp;//生命值 
 
         playerHealth.maxHp = baseProperty.maxHp;
-        if (playerHealth.currentHp > baseProperty.maxHp)
-            playerHealth.currentHp = baseProperty.maxHp;
+        if (playerHealth.currentHp > playerHealth.maxHp)
+            playerHealth.currentHp = playerHealth.maxHp;
         playerHealth.UpdateHealthDisplay();
         
         if (bulletCount > baseProperty.maxBulletCount)

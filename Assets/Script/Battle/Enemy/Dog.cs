@@ -44,7 +44,7 @@ public class Dog : EnemyBase
         if (spawnTimer >= spawnInterval)
         {
             spawnTimer = 0;
-            Instantiate(firePlane, transform.position, transform.rotation);
+            Instantiate(firePlane, transform.position + Vector3.up * 0.2f, transform.rotation);
         }
     }
 }

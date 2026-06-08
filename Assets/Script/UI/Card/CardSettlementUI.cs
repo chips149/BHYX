@@ -48,10 +48,9 @@ public class CardSettlementUI : MonoBehaviour
         DisableParentLayoutComponents();
         BuildColumns();
 
-        var cardMap = CardHandler.Data.ToDictionary(c => c.id, c => c);
         for (int i = 0; i < cardIds.Count; i++)
         {
-            if (!cardMap.TryGetValue(cardIds[i], out var cardData)) continue;
+            var cardData = CardHandler.Data.FirstOrDefault(c => c.id == cardIds[i]);
 
             var column = columns[i % ColumnCount];
             var itemObj = Instantiate(itemPrefab, column.content);
@@ -295,7 +294,6 @@ public class CardSettlementUI : MonoBehaviour
         }
 
         background.type = Image.Type.Sliced;
-        background.color = new Color(0.92f, 0.85f, 0.5f, 1f);
     }
 
     private void DisableParentLayoutComponents()

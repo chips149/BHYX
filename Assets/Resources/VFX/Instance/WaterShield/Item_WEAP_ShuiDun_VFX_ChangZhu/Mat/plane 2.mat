@@ -92,7 +92,7 @@ Material:
     - _Float16: 1.1
     - _Float17: 0.3
     - _Float2: 0.36
-    - _Float3: 8
+    - _Float3: 1.05
     - _Float4: 1.39
     - _Float5: 0.5
     - _GlossMapScale: 1

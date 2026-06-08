@@ -1,13 +1,10 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public class BootPanel : MonoBehaviour
 {
-
-    public void OnNewGameClicked()
+    public void OnStartGameClicked()
     {
-        SaveManager.ClearPersistedSaveForNewGame();
         SceneManager.LoadScene("MainMenuScene");
     }
 }

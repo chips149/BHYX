@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: hit_01
-  m_Shader: {fileID: 4800000, guid: 229abaadc96cde04f8a19d0fbbe82e00, type: 3}
+  m_Shader: {fileID: 4800000, guid: 4145f4fabde5e464bb8d5a064ec39217, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -60,7 +60,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _TextureSample0:
-        m_Texture: {fileID: 2800000, guid: f10d9712171b5ec499da91c4820d3beb, type: 3}
+        m_Texture: {fileID: 2800000, guid: 66849e6ffe7a614488123b55550b1a12, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _texcoord:
@@ -69,11 +69,15 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - DepthFade: 0
     - _BumpScale: 1
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
-    - _Float0: 1
+    - _Float0: 0
+    - _Float1: 0
+    - _Float2: 7.92
+    - _Float3: 0.37
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
@@ -86,8 +90,9 @@ Material:
     - _SrcBlend: 1
     - _UVSec: 0
     - _ZWrite: 1
+    - __dirty: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _Color0: {r: 1.3468891, g: 3.3815782, b: 6.964403, a: 1}
+    - _Color0: {r: 0.27735847, g: 0.5401371, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []

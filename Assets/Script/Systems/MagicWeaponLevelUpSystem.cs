@@ -11,12 +11,12 @@ public static class MagicWeaponLevelUpSystem
 
     public static int GetLevel(string weaponName)
     {
-        return PlayerPrefs.GetInt(GetLevelKey(weaponName), 0);
+        return PlayerPrefs.GetInt(GetLevelKey(weaponName), 1);
     }
     
     public static void SetLevel(string weaponName, int level)
     {
-        PlayerPrefs.SetInt(GetLevelKey(weaponName), Mathf.Clamp(level, 0, MaxLevel));
+        PlayerPrefs.SetInt(GetLevelKey(weaponName), Mathf.Clamp(level, 1, MaxLevel));
         PlayerPrefs.Save();
     }
     
@@ -161,8 +161,7 @@ public static class MagicWeaponLevelUpSystem
         var current = GetPropertyAtLevel(weaponName, currentLevel);
         var next = GetPropertyAtLevel(weaponName, currentLevel + 1);
 
-        return $"下一级：{currentLevel + 1}\n" +
-               GetDeltaLine("攻击力", current.damage, next.damage) +
+        return GetDeltaLine("攻击力", current.damage, next.damage) +
                GetDeltaLine("子弹上限", current.maxBulletCount, next.maxBulletCount) +
                GetDeltaLine("子弹回复速度", current.bulletReloadTime, next.bulletReloadTime, "秒", true) +
                GetDeltaLine("栅栏血量", current.maxHp, next.maxHp) +

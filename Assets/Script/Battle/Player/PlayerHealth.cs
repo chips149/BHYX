@@ -11,9 +11,14 @@ public class PlayerHealth : MonoBehaviour, IBeHit
     public GameObject firePrefab;
 
     public bool shieldActive;           
-    public float shieldBonus;          
+    public float shieldBonus;           
+    public float shieldRemaining;       
     public int shieldCardLevel;        
     public WaterShieldEffect shieldFx;
+
+    [Header("护盾UI")]
+    public GameObject shieldUIRoot;
+    public TextMeshProUGUI shieldText;
 
     public void Initialize(PlayerManager pm)
     {
@@ -23,6 +28,7 @@ public class PlayerHealth : MonoBehaviour, IBeHit
         playerHealthText = textObj.GetComponent<TextMeshProUGUI>();
 
         currentHp = maxHp;
+        shieldUIRoot?.SetActive(false);
         UpdateHealthDisplay();
     }
 
@@ -55,32 +61,43 @@ public class PlayerHealth : MonoBehaviour, IBeHit
     {
         shieldActive = true;
         shieldBonus = bonus;
-        maxHp += bonus;
-        currentHp += bonus;
+        shieldRemaining = bonus;
         shieldFx?.ShowShield();
-        UpdateHealthDisplay();
+        UpdateShieldDisplay();
     }
 
     public void RemoveShield()
     {
         if (!shieldActive) return;
         shieldActive = false;
-        maxHp -= shieldBonus;
-        if (currentHp > maxHp)
-            currentHp = maxHp;
         shieldBonus = 0;
+        shieldRemaining = 0;
         shieldFx?.HideShield();
-        shieldFx = null;
-        UpdateHealthDisplay();
+        shieldUIRoot?.SetActive(false);
+        UpdateShieldDisplay();
     }
 
     private void TakeDamage(float damage)
     {
-        currentHp -= damage;
-
-        if (shieldActive && currentHp < maxHp - shieldBonus)
+        if (shieldActive && shieldRemaining > 0)
         {
-            RemoveShield();
+            if (damage < shieldRemaining)
+            {
+                shieldRemaining -= damage;
+                shieldFx?.OnHit();
+                UpdateShieldDisplay();
+            }
+            else
+            {
+                damage -= shieldRemaining;
+                shieldRemaining = 0;
+                RemoveShield();
+                currentHp -= damage;
+            }
+        }
+        else
+        {
+            currentHp -= damage;
         }
 
         if (currentHp <= 0)
@@ -96,5 +113,13 @@ public class PlayerHealth : MonoBehaviour, IBeHit
     public void UpdateHealthDisplay()
     {
         playerHealthText.text = $" {currentHp}";
+    }
+
+    private void UpdateShieldDisplay()
+    {
+        if (shieldUIRoot != null)
+            shieldUIRoot.SetActive(shieldActive && shieldRemaining > 0);
+        if (shieldText != null)
+            shieldText.text = $"{(int)shieldRemaining}";
     }
 }

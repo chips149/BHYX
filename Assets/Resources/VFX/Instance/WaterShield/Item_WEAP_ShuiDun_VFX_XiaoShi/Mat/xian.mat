@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: xian
-  m_Shader: {fileID: 4800000, guid: 229abaadc96cde04f8a19d0fbbe82e00, type: 3}
+  m_Shader: {fileID: 4800000, guid: 4145f4fabde5e464bb8d5a064ec39217, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -69,11 +69,15 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - DepthFade: 0
     - _BumpScale: 1
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
-    - _Float0: 1
+    - _Float0: 0
+    - _Float1: 0
+    - _Float2: 1
+    - _Float3: 1
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
@@ -86,6 +90,7 @@ Material:
     - _SrcBlend: 1
     - _UVSec: 0
     - _ZWrite: 1
+    - __dirty: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _Color0: {r: 0.8896405, g: 1.9994774, b: 3.8490567, a: 1}

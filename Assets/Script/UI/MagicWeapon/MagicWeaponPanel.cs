@@ -21,6 +21,13 @@ public class MagicWeaponPanel : MonoBehaviour
     public Button upgradeButton;
     public GameObject noHaveCoinImage;
 
+    [Header("等级显示")]
+    public TMP_Text currentLevelText;
+    public TMP_Text upgradePreviewText;
+
+    [Header("金币显示")]
+    public TMP_Text coinText;
+
     public Transform parent;
 
     public int selectedID = -1;
@@ -106,6 +113,10 @@ public class MagicWeaponPanel : MonoBehaviour
         bonusPreview.text = MagicWeaponLevelUpSystem.GetUpgradePreview(weaponKey, currentLevel);
 
         upgradeCost.text = MagicWeaponLevelUpSystem.GetUpgradeCostText(weaponKey);
+
+        currentLevelText.text = $"{currentLevel}";
+        upgradePreviewText.text = $"{currentLevel + 1}";
+        coinText.text = $"{CoinSystem.GetCoin()}";
 
         var cost = MagicWeaponLevelUpSystem.GetUpgradeCost(currentLevel);
         upgradeButton.interactable = MagicWeaponLevelUpSystem.CanLevelUp(weaponKey);
