@@ -1,3 +1,4 @@
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -19,6 +20,11 @@ public class MonsterDisplayCell : MonoBehaviour
     {
         _manager = manager;
         img.sprite = Resources.Load<Sprite>(info.imgPath);
+    }
+
+    public void SetSelected(bool selected)
+    {
+        transform.DOScale(selected ? Vector3.one * 1.15f : Vector3.one, 0.2f);
     }
 
     public void OnClick()

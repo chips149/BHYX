@@ -85,6 +85,13 @@ public class SaveManager
             File.Delete(SavePath);
 
         SaveData.New();
+
+        // 额外安全措施：确保卡牌数据也被重置
+        if (SaveData.Instance.chosenCardIds == null)
+            SaveData.Instance.chosenCardIds = new System.Collections.Generic.List<int>();
+        else
+            SaveData.Instance.chosenCardIds.Clear();
+
         ApplyToGameState();
         HasLoadedSave = false;
         

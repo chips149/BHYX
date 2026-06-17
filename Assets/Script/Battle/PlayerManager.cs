@@ -22,7 +22,6 @@ public class PlayerManager
     public Vector3 lastAimPos;
     public int bulletCount;
     public float reloadTimer;
-    public float attackCooldownTimer;
     public bool canAttack = true;
 
     public void Initialize()
@@ -32,7 +31,6 @@ public class PlayerManager
         baseProperty = new PlayerProperty()
         {
             damage = 2,
-            attackInterval = 1,
             maxBulletCount = 5,
             critRate = 5,
             critDamage = 1.15f,
@@ -51,7 +49,6 @@ public class PlayerManager
         finalProperty = new PlayerProperty()
         {
             damage = baseProperty.damage,
-            attackInterval = baseProperty.attackInterval,
             maxBulletCount = baseProperty.maxBulletCount,
             critRate = baseProperty.critRate,
             critDamage = baseProperty.critDamage,
@@ -125,7 +122,6 @@ public class PlayerManager
     public void UpdateProperty()
     {
         finalProperty.damage = baseProperty.damage;//攻击力
-        finalProperty.attackInterval = baseProperty.attackInterval;//攻击间隔 
         finalProperty.critRate = baseProperty.critRate;//暴击率 
         finalProperty.critDamage = baseProperty.critDamage;//暴击伤害
         finalProperty.bulletScale = baseProperty.bulletScale; //子弹大小
@@ -153,18 +149,16 @@ public class PlayerManager
 public class PlayerProperty : GameplayEventData
 {
     public float damage;//攻击力
-    public float attackInterval; //攻击间隔 
     public int maxBulletCount;//子弹上限
     public float critRate;//暴击率
     public float critDamage;//暴击伤害
     public float bulletScale = 1f;//子弹大小
-    public float bulletReloadTime = 1.5f;//子弹恢复速度
+    public float bulletReloadTime = 3f;//子弹恢复速度
     public float maxSpread = 4.5f;//最大散步范围
     public float minSpread = 2.5f;//最小散步范围
     public float maxHp = 50f;//血量 
 
     public float damageCorrection=1;
-    public float attackIntervalCorrection=1;
     public float critRateCorrection=1;
     public float critDamageCorrection=1;
 }

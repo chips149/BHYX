@@ -160,10 +160,10 @@ public class SpawnMonsterHandler : MonoBehaviour
         prefabs.Add(2, Resources.Load<XiaoHuoGuai>("Prefab/Enemy/XiaoHuoGuai2"));
         prefabs.Add(3, Resources.Load<XiaoHuoGuai>("Prefab/Enemy/XiaoHuoGuai3"));
         prefabs.Add(4, Resources.Load<Phoenix>("Prefab/Enemy/Phoenix"));
-        prefabs.Add(5, Resources.Load<Monkey>("Prefab/Enemy/Monkey"));
-        prefabs.Add(6, Resources.Load<JingCu>("Prefab/Enemy/JingCu"));
-        prefabs.Add(7, Resources.Load<Dog>("Prefab/Enemy/Dog"));
-        prefabs.Add(8, Resources.Load<XiaoHuoGuai>("Prefab/Enemy/HuoShu"));
+        prefabs.Add(5, Resources.Load<Monkey>("Prefab/Enemy/Dog"));
+        prefabs.Add(6, Resources.Load<JingCu>("Prefab/Enemy/Monkey"));
+        prefabs.Add(7, Resources.Load<Dog>("Prefab/Enemy/JingCu"));
+        //prefabs.Add(8, Resources.Load<XiaoHuoGuai>("Prefab/Enemy/HuoShu"));
     }
 
     void LoadMonster()

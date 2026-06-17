@@ -40,7 +40,6 @@ public abstract class PlayerBase : MonoBehaviour
 
         pm.bulletCount = pm.baseProperty.maxBulletCount;
         pm.reloadTimer = 0;
-        pm.attackCooldownTimer = 0;
         pm.canAttack = true;
         UpdateBulletUI();
     }
@@ -50,7 +49,6 @@ public abstract class PlayerBase : MonoBehaviour
         if (EventSystem.current.IsPointerOverGameObject()) return;
         
         AutoReloadBullet(dt);
-        UpdateAttackCooldown(dt);
 
         if (Input.GetMouseButton(0))
         {
@@ -84,19 +82,6 @@ public abstract class PlayerBase : MonoBehaviour
 
     public virtual void OnCardDamage(float amount)
     {
-    }
-
-    private void UpdateAttackCooldown(float dt)
-    {
-        if (!pm.canAttack)
-        {
-            pm.attackCooldownTimer += dt;
-            if (pm.attackCooldownTimer >= pm.baseProperty.attackInterval)
-            {
-                pm.canAttack = true;
-                pm.attackCooldownTimer = 0;
-            }
-        }
     }
 
     public void UpdateBulletUI()

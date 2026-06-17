@@ -41,6 +41,10 @@ public class MonsterPanel : MonoBehaviour
 
     public void Display(int id)
     {
+        foreach (var c in Cells)
+            c.SetSelected(false);
+        Cells[id].SetSelected(true);
+
         var info = display.list[id];
         nameText.text = info.name;
         hpText.text = info.hp;

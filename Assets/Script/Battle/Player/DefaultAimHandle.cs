@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using Object = UnityEngine.Object;
+using Random = UnityEngine.Random;
 
 
 // 只管显示
@@ -47,6 +48,14 @@ public class DefaultAimHandle : AimHandle
     public override void End()
     {
         aimObject.SetActive(false);
-        onAimEnd?.Invoke(aimPos);
+
+        var maxScale = GameState.Pm.baseProperty.maxSpread;
+        var minScale = GameState.Pm.baseProperty.minSpread;
+        var currentSpread = Mathf.Lerp(minScale, maxScale, Mathf.PingPong(t, 1));
+        var randomAngle = Random.Range(0, Mathf.PI * 2);
+        var randomRadius = Random.value * currentSpread;
+        var offset = new Vector3(Mathf.Cos(randomAngle) * randomRadius, 0, Mathf.Sin(randomAngle) * randomRadius);
+
+        onAimEnd?.Invoke(aimPos + offset);
     }
 }

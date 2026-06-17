@@ -37,9 +37,6 @@ public class WangBaPlayer : PlayerBase
                 {
                     atkHandle.Attack(aimPosition);
                 }
-
-                pm.canAttack = false;
-                pm.attackCooldownTimer = 0;
             }
         };
     }

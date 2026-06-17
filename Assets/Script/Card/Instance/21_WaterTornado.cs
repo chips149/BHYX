@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CardProperty(21, "水龙卷", "", "杀敌概率生成水龙卷\n暴击率+10%\n子弹大小+15%",isSkillCard = true)]
+[CardProperty(21, "水龙卷", "UI/Card/Icon/WaterTornado", "杀敌概率生成水龙卷\n暴击率+10%\n子弹大小+15%",isSkillCard = true)]
 public class WaterTornado : CardData
 {
     public static bool hasWaterTornado;

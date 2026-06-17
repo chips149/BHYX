@@ -29,9 +29,6 @@ public class YuHuanPlayer : PlayerBase
                 UpdateBulletUI();
 
                 atkHandle.Attack(aimPosition);
-
-                pm.canAttack = false;
-                pm.attackCooldownTimer = 0;
             }
         };
     }

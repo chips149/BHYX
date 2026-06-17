@@ -1,3 +1,4 @@
+using DG.Tweening;
 using UnityEngine;
 
 public class DefaultSealBullet : MonoBehaviour
@@ -63,6 +64,7 @@ public class DefaultSealBullet : MonoBehaviour
         if (transform.position.y > 0.2f) return;
         
         landingEffect.Play();
+        Camera.main.DOShakePosition(0.3f, new Vector3(0, 0.5f, 0));
 
         var finalDamage = damage;
         Collider[] results = new Collider[32];

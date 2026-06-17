@@ -1,4 +1,5 @@
 using System.Linq;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,8 +12,35 @@ public class DrawCardPanel : MonoBehaviour
     public Transform haveCardContainer;
     public GameObject cardIconPrefab;
 
+    [Header("法宝属性面板")]
+    public AttributesPanel weaponPropertyPanel;
+
+    [Header("旋转装饰图")]
+    public Image rotatingImage;
+
     private int _selectedIndex = -1;
     private CardData _selectedCardData;
+    private Tween _rotateTween;
+
+    private void OnEnable()
+    {
+        transform.localScale = Vector3.zero;
+        transform.DOScale(Vector3.one, 0.3f).SetEase(Ease.OutBack);
+
+        if (rotatingImage != null)
+        {
+            _rotateTween?.Kill();
+            _rotateTween = rotatingImage.transform
+                .DOLocalRotate(new Vector3(0, 0, -360), 6f, RotateMode.FastBeyond360)
+                .SetLoops(-1, LoopType.Restart)
+                .SetEase(Ease.Linear);
+        }
+    }
+
+    private void OnDisable()
+    {
+        _rotateTween?.Kill();
+    }
 
     void RandomCard()
     {
@@ -22,6 +50,7 @@ public class DrawCardPanel : MonoBehaviour
         {
             _viewers[i].Initialize(this, i, data[i]);
         }
+
         _selectedIndex = -1;
         _selectedCardData = null;
     }
@@ -51,12 +80,16 @@ public class DrawCardPanel : MonoBehaviour
         gameObject.SetActive(true);
         RandomCard();
         RefreshHaveCards();
+        weaponPropertyPanel?.RefreshPanel();
     }
 
     public void CloseDrawCardPanel()
     {
         gameObject.SetActive(false);
         GameState.currentLevel++;
+
+        EnvironmentManager.Instance.CheckAndSwitch(GameState.currentLevel);
+
         SaveManager.ToSave();
         SpawnMonsterHandler.Instance.StartSpawn();
     }

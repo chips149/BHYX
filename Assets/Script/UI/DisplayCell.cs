@@ -1,3 +1,4 @@
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -27,6 +28,11 @@ public class DisplayCell : MonoBehaviour
         img.sprite = Resources.Load<Sprite>(info.imgPath);
         description = info.description;
         boostAdjust = info.boostAdjust;
+    }
+
+    public void SetSelected(bool selected)
+    {
+        transform.DOScale(selected ? Vector3.one * 1.15f : Vector3.one, 0.2f);
     }
 
     public void OnClick()

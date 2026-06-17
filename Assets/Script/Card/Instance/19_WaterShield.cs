@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-[CardProperty(19, "水盾", "", "每40秒刷新水盾\n攻击力-2\n子弹回复速度+15%",isSkillCard = true)]
+[CardProperty(19, "水盾", "UI/Card/Icon/WaterShield", "每40秒刷新水盾\n攻击力-2\n子弹回复速度+15%",isSkillCard = true)]
 
 public class WaterShield : CardData
 {
@@ -48,9 +48,9 @@ public class WaterShield : CardData
 
         var prefab = Resources.Load<WaterShieldEffect>("Prefab/Item/WaterShield");
         var playerTrans = GameState.Pm.player.transform;
-        var point = playerTrans.Find("WaterShieldPoint");
         
-        var effect = Object.Instantiate(prefab, point.position, point.rotation, point);
+        var effect = Object.Instantiate(prefab, playerTrans);
+        effect.transform.localPosition = new Vector3(0, 0, -0.5f);
         ph.shieldFx = effect;
     }
     

@@ -61,48 +61,42 @@ public static class MagicWeaponLevelUpSystem
         {
             case "HuLu":
                 property.damage = 2;
-                property.attackInterval = 1f;
                 property.maxBulletCount = 5;
-                property.bulletReloadTime = 1f;
+                property.bulletReloadTime = 2f;
                 property.bulletScale = 2f;
                 property.maxHp = 35f;
                 property.critRate = 5f;
                 property.critDamage = 1.5f;
-                property.maxSpread = 3f;
-                property.minSpread = 5f;
+                property.maxSpread = 5f;
+                property.minSpread = 3f;
                 property.critRateCorrection = 1.5f;
                 property.critDamageCorrection = 1.5f;
                 break;
             case "WangBa":
                 property.damage = 1;
-                property.attackInterval = 1f;
                 property.maxBulletCount = 5;
-                property.bulletReloadTime = 0.8f;
+                property.bulletReloadTime = 2f;
                 property.bulletScale = 2f;
                 property.maxHp = 25f;
                 property.critRate = 5f;
                 property.critDamage = 1.5f;
-                property.maxSpread = 3f;
+                property.maxSpread = 4f;
                 property.minSpread = 2f;
                 property.damageCorrection = 1.25f;
-                property.attackIntervalCorrection = 1.25f;
                 break;
             case "YuHuan":
-                property.damage = 1;
-                property.attackInterval = 0.5f;
+                property.damage = 2;
                 property.maxBulletCount = 10;
                 property.bulletReloadTime = 1f;
                 property.bulletScale = 2f;
                 property.maxHp = 30f;
                 property.critRate = 5f;
-                property.critDamage = 1.6f;
-                property.maxSpread = 5f;
-                property.minSpread = 3f;
-                property.attackIntervalCorrection = 1.5f;
+                property.critDamage = 2f;
+                property.maxSpread = 6f;
+                property.minSpread = 2f;
                 break;
             default:
                 property.damage = 1;
-                property.attackInterval = 1f;
                 property.maxBulletCount = 5;
                 property.bulletReloadTime = 1f;
                 property.bulletScale = 1f;
@@ -126,18 +120,19 @@ public static class MagicWeaponLevelUpSystem
 
     public static void ApplyUpLevel(PlayerProperty property, int level)
     {
-        property.damage += level * 2;
-        property.maxBulletCount += level / 3;
-        property.critRate += (level / 5) * 5;
-        property.critDamage += (level / 2) * 0.05f;
-        property.bulletReloadTime = Mathf.Max(0.1f, property.bulletReloadTime - level * 0.1f);
-        property.maxHp += level * 3;
+        var upgrades = Mathf.Max(0, level - 1); // level 1 = 0 次升级（基础属性）, level 2 = 1 次升级, 以此类推
+        property.damage += upgrades;
+        property.maxBulletCount += upgrades / 3;
+        property.critRate += (upgrades / 5) * 5;
+        property.critDamage += (upgrades / 2) * 0.05f;
+        property.bulletReloadTime = Mathf.Max(0.1f, property.bulletReloadTime - upgrades * 0.05f);
+        property.maxHp += upgrades * 3;
     }
 
     public static string GetDetailText(string weaponName, int level)
     {
         var property = GetPropertyAtLevel(weaponName, level);
-        return $"攻击力：{Format(property.damage)}\n攻击间隔：{Format(property.attackInterval)}\n" +
+        return $"攻击力：{Format(property.damage)}\n" +
                $"子弹上限：{property.maxBulletCount}\n子弹回复速度：{Format(property.bulletReloadTime)}秒\n子弹大小：{Format(property.bulletScale)}\n" +
                $"栅栏血量：{Format(property.maxHp)}\n暴击率：{Format(property.critRate)}%\n暴击伤害：+{Format((property.critDamage - 1f) * 100f)}%\n" +
                $"散布范围：{Format(property.minSpread)}~{Format(property.maxSpread)}";

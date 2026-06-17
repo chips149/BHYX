@@ -12,6 +12,9 @@ public class GameInitializer : MonoBehaviour
 
         var bm = ModulesManager.Get<BattleManager>();
         bm.Initialize();
+
+        // 读档完后按当前关卡加载对应环境
+        EnvironmentManager.Instance.Init();
     }
 
     private void OnDestroy()

@@ -73,6 +73,10 @@ public class MagicWeaponPanel : MonoBehaviour
 
     public void Display(DisplayCell cell)
     {
+        foreach (var c in Cells)
+            c.SetSelected(false);
+        cell.SetSelected(true);
+
         selectedID = cell.id;
         nameText.text = cell.mwName;
         description.text = cell.description;

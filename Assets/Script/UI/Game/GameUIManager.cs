@@ -34,7 +34,7 @@ public class GameUIManager : MonoBehaviour
     {
         losePanel.SetActive(true);
         GameState.isGameOver = true;
-        loseText.text=$"获得火晶:{CoinSystem.sessionCoin}";
+        loseText.text = $"获得火晶:{CoinSystem.sessionCoin}";
 
         ShowCardSettlement();
     }
@@ -50,6 +50,7 @@ public class GameUIManager : MonoBehaviour
     public void OnMainMenuClicked()
     {
         GameState.isGameOver = false;
+        CoinSystem.CommitSessionCoins();
         SaveManager.ClearPersistedSaveForNewGame();
         SceneManager.LoadScene("MainMenuScene");
     }
