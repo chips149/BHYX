@@ -14,22 +14,22 @@ namespace Framework{
     }
     
     
-    [RegisterBeforeSceneLoad]
+    [ModulesManager.RegisterBeforeSceneLoad]
     public class GlobalUpdate : MonoBehaviour
     {
         private void Awake()
         {
-            DontDestroyOnLoad(gameObject);
+            DontDestroyOnLoad(gameObject); // 跨场景不销毁
         }
 
-        private readonly List<IUpdate>  _updates = new();
+        private readonly List<IUpdate>  _updates = new(); // 所有注册的更新模块
 
         public void Register(IUpdate update){
-            _updates.Add(update);
+            _updates.Add(update); //注册模块
         }
 
         public void Unregister(IUpdate update){
-            _updates.Remove(update);
+            _updates.Remove(update); //注销模块
         }
 
         private void Update(){
@@ -50,7 +50,7 @@ namespace Framework{
             var temp = _updates.ToList();
             temp.ForEach(i=>i.OnLateUpdate());
             
-            _updates.RemoveAll(i=>i.IsDone);
+            _updates.RemoveAll(i=>i.IsDone); //清理已完成的模块
         }
     }
 }

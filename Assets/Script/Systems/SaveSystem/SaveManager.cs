@@ -1,4 +1,4 @@
-﻿using System.IO;
+using System.IO;
 using System.Linq;
 using UnityEngine;
 
@@ -116,7 +116,8 @@ public class SaveManager
     private static void ApplyToGameState()
     {
         GameState.currentLevel = SaveData.Instance.currentLevel;
-        GameState.playerPath = SaveData.Instance.playerPath;
+        if (!string.IsNullOrEmpty(SaveData.Instance.playerPath))
+            GameState.playerPath = SaveData.Instance.playerPath;
         CoinSystem.sessionCoin = SaveData.Instance.sessionCoin;
     }
 }

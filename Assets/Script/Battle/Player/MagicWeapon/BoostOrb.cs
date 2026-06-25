@@ -4,7 +4,7 @@ public class BoostOrb : MonoBehaviour
 {
     public float orbitRadius = 1.5f;
     public float orbitSpeed = 180f;
-    public float flySpeed = 8f;
+    public float flySpeed = 4f;
 
     private Transform orbitCenter;
     private float baseAngle;

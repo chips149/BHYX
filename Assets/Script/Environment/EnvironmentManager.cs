@@ -9,12 +9,20 @@ public class EnvironmentManager : MonoBehaviour
     private GameObject _currentEnv;
     private int _currentEnvIndex = -1;
 
-    private readonly string[] _envPrefabPaths = new string[]
+    private readonly string[] envPrefabPaths = new string[]
     {
         "Prefab/Enviroment/Spring",
         "Prefab/Enviroment/Summer",
         "Prefab/Enviroment/Autumn",
         "Prefab/Enviroment/Winter"
+    };
+
+    private readonly string[] bgmNames = new string[]
+    {
+        "LevelSpri",
+        "LevelSum",
+        "LevelAut",
+        "LevelWin"
     };
 
     private void Awake()
@@ -23,9 +31,6 @@ public class EnvironmentManager : MonoBehaviour
     }
 
 
-    /// <summary>
-    /// 由 GameInitializer 在 SaveManager.Load() 之后调用，确保读档后的关卡生效
-    /// </summary>
     public void Init()
     {
         LoadEnvironment(GetEnvIndex(GameState.currentLevel));
@@ -52,10 +57,13 @@ public class EnvironmentManager : MonoBehaviour
         _currentEnv = null;
 
         _currentEnvIndex = index;
-        string path = _envPrefabPaths[index];
+        string path = envPrefabPaths[index];
 
         GameObject prefab = Resources.Load<GameObject>(path);
         _currentEnv = Instantiate(prefab);
         _currentEnv.transform.position = spawnPosition;
+
+        // 切换到对应场景 BGM
+        SoundManager.PlayBGM("Audio/BGM/" + bgmNames[index]);
     }
 }

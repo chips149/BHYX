@@ -20,6 +20,8 @@ public class PlayerHealth : MonoBehaviour, IBeHit
     public GameObject shieldUIRoot;
     public TextMeshProUGUI shieldText;
 
+    private AudioSource _burnSfx;
+
     public void Initialize(PlayerManager pm)
     {
         this.pm = pm;
@@ -37,7 +39,13 @@ public class PlayerHealth : MonoBehaviour, IBeHit
         if (data.from == "player")
         {
             firePrefab.SetActive(false);
-            SoundManager.StopLoop();
+
+            if (_burnSfx != null)
+            {
+                _burnSfx.Stop();
+                _burnSfx.clip = null;
+                _burnSfx = null;
+            }
             pm.container.RemoveEffect<DotBuff>();
             return;
         }
@@ -51,7 +59,7 @@ public class PlayerHealth : MonoBehaviour, IBeHit
     public void RemoveHp(RemoveHpData data)
     {
         firePrefab.SetActive(true);
-        SoundManager.PlayLoop("Audio/SFX/Monster/FenceBurn");
+        _burnSfx = SoundManager.PlayLoopingSfx("Audio/SFX/Monster/FenceBurn");
         pm.container.Execute(data);
 
         TakeDamage(data.damage);

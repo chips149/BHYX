@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
@@ -27,6 +28,11 @@ public class MagicWeaponPanel : MonoBehaviour
 
     [Header("金币显示")]
     public TMP_Text coinText;
+
+    [Header("切换法宝清存档")]
+    public GameObject ClearLevelImage;
+    public Button clearConfirmButton;
+    public Button clearCancelButton;
 
     public Transform parent;
 
@@ -73,15 +79,54 @@ public class MagicWeaponPanel : MonoBehaviour
 
     public void Display(DisplayCell cell)
     {
+        // 有存档且点击的不是当前已选法宝 → 弹窗确认
+        if (selectedID != -1 && SaveManager.HasSaveFile() && cell.id != selectedID)
+        {
+            StartCoroutine(ConfirmThenSwitch(cell));
+            return;
+        }
+
+        ApplySelection(cell);
+    }
+
+    private void ApplySelection(DisplayCell cell)
+    {
         foreach (var c in Cells)
             c.SetSelected(false);
         cell.SetSelected(true);
 
         selectedID = cell.id;
+        GameState.playerPath = playerPrefab[cell.id];
         nameText.text = cell.mwName;
         description.text = cell.description;
         boostAdjust.text = cell.boostAdjust;
         RefreshUpgradeInfo();
+    }
+
+    private IEnumerator ConfirmThenSwitch(DisplayCell cell)
+    {
+        ClearLevelImage.SetActive(true);
+
+        bool confirmed = false;
+        bool done = false;
+
+        clearConfirmButton.onClick.AddListener(() => { confirmed = true; done = true; });
+        clearCancelButton.onClick.AddListener(() => { done = true; });
+
+        yield return new WaitUntil(() => done);
+
+        clearConfirmButton.onClick.RemoveAllListeners();
+        clearCancelButton.onClick.RemoveAllListeners();
+
+        ClearLevelImage.SetActive(false);
+
+        if (confirmed)
+        {
+            SaveManager.ClearPersistedSaveForNewGame();
+            GameState.playerPath = playerPrefab[cell.id];
+            SaveManager.ToSave();
+            ApplySelection(cell);
+        }
     }
 
     public void UpgradeSelectedWeapon()

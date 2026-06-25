@@ -1,12 +1,10 @@
-using System;
+using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.Pool;
 
 public class CrossDropBullet : MonoBehaviour
 {
     private PlayerManager pm;
-
 
     public float xzSpeed = 5f;
     private float time;
@@ -14,7 +12,7 @@ public class CrossDropBullet : MonoBehaviour
     private Vector3 dir;
     
     private static CrossDropBullet prefab;
-    private static ObjectPool<CrossDropBullet> pool;
+    private static Stack<CrossDropBullet> pool;
     private static bool isCreated;
 
     public static void Shoot(Vector3 center, PlayerManager pm)
@@ -22,9 +20,8 @@ public class CrossDropBullet : MonoBehaviour
         if (!isCreated)
         {
             isCreated = true;
-
             prefab = Resources.Load<CrossDropBullet>("Prefab/Bullet/CrossDrop");
-            pool = new ObjectPool<CrossDropBullet>(OnCreate, OnGet, OnRelease);
+            pool = new Stack<CrossDropBullet>();
 
             GameState.Bm.onDispose += () =>
             {
@@ -35,47 +32,47 @@ public class CrossDropBullet : MonoBehaviour
             };
         }
 
-
-        ShootAni(center, Vector3.forward);
-        ShootAni(center, Vector3.back);
-        ShootAni(center, Vector3.right);
-        ShootAni(center, Vector3.left);
-
-        return;
-
-        CrossDropBullet OnCreate()
-        {
-            var bullet = Instantiate(prefab, center, Quaternion.identity);
-            bullet.pm = pm;
-            return bullet;
-        }
-
-        void OnGet(CrossDropBullet bullet)
-        {
-            bullet.time = 0;
-            bullet.gameObject.SetActive(true);
-        }
-
-        void OnRelease(CrossDropBullet bullet)
-        {
-            bullet.gameObject.SetActive(false);
-        }
+        ShootAni(center, Vector3.forward, pm);
+        ShootAni(center, Vector3.back, pm);
+        ShootAni(center, Vector3.right, pm);
+        ShootAni(center, Vector3.left, pm);
     }
 
-    private static void ShootAni(Vector3 center, Vector3 dir)
+    private static void ShootAni(Vector3 center, Vector3 dir, PlayerManager pm)
     {
-        var bullet = pool.Get();
+        var bullet = GetFromPool();
+        bullet.pm = pm;
         bullet.transform.position = center;
         bullet.dir = dir;
+        bullet.time = 0;
+        bullet.gameObject.SetActive(true);
     }
 
+    private static CrossDropBullet GetFromPool()
+    {
+        while (pool != null && pool.Count > 0)
+        {
+            var bullet = pool.Pop();
+            if (bullet != null)
+                return bullet;
+            // 跳过已销毁的引用
+        }
+        return Instantiate(prefab, Vector3.zero, Quaternion.identity);
+    }
+
+    public void Release()
+    {
+        if (this == null || pool == null) return;
+        gameObject.SetActive(false);
+        pool.Push(this);
+    }
 
     private void Update()
     {
         transform.position += dir * (Time.deltaTime * xzSpeed);
         time += Time.deltaTime;
         if (time > lifeTime)
-            pool.Release(this);
+            Release();
     }
 
 

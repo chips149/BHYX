@@ -40,11 +40,11 @@ namespace Framework.Gameplay
                 var e = effects.OfType<T>().First();
                 if (e.canSolo)
                 {
-                    CreateEffect();
+                    CreateEffect(); // 允许叠加
                 }
                 else
                 {
-                    e.OnRefresh();
+                    e.OnRefresh(); // 刷新已有效果
                 }
 
                 return;
@@ -59,7 +59,7 @@ namespace Framework.Gameplay
                 effects.Add(newEffect);
             }
         }
-
+        //移除效果
         public void RemoveEffect<T>(int count = 1) where T : GameplayEffect
         {
             var es = effects.FindAll(e => e is T);
@@ -95,9 +95,9 @@ namespace Framework.Gameplay
 
     public abstract class GameplayEffect
     {
-        public int sort;
-        public bool canSolo = false;
-        public bool finish = false;
+        public int sort; //执行顺序
+        public bool canSolo = false; //是否存在多实例
+        public bool finish = false; //执行后是否移除
 
         public virtual void OnRefresh()
         {

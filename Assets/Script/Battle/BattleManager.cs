@@ -32,15 +32,16 @@ public class BattleManager : IUpdate
         // 回调赋值
         GameState.onWaveSpawnOver = (count, total) =>
         {
-            LevelWaveUI.instance.RefreshUI(GameState.currentLevel, count, total);
+            if (LevelWaveUI.instance != null)
+                LevelWaveUI.instance.RefreshUI(GameState.currentLevel, count, total);
         };
 
         GameState.onSpawnComplete = () => { GameState.spawnOver = true; };
 
         GameState.onLevelClear = () =>
         {
-            //TODO:打开卡牌界面
-            SpawnMonsterHandler.Instance.drawCardPanel.OpenDrawCardPanel();
+            if (SpawnMonsterHandler.Instance != null && SpawnMonsterHandler.Instance.drawCardPanel != null)
+                SpawnMonsterHandler.Instance.drawCardPanel.OpenDrawCardPanel();
         };
 
         // 开始刷怪

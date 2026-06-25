@@ -62,7 +62,7 @@ public static class MagicWeaponLevelUpSystem
             case "HuLu":
                 property.damage = 2;
                 property.maxBulletCount = 5;
-                property.bulletReloadTime = 2f;
+                property.bulletReloadTime = 1.5f;
                 property.bulletScale = 2f;
                 property.maxHp = 35f;
                 property.critRate = 5f;
@@ -75,7 +75,7 @@ public static class MagicWeaponLevelUpSystem
             case "WangBa":
                 property.damage = 1;
                 property.maxBulletCount = 5;
-                property.bulletReloadTime = 2f;
+                property.bulletReloadTime = 1.5f;
                 property.bulletScale = 2f;
                 property.maxHp = 25f;
                 property.critRate = 5f;

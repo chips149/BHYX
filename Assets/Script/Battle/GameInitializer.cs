@@ -19,6 +19,8 @@ public class GameInitializer : MonoBehaviour
 
     private void OnDestroy()
     {
+        var bm = ModulesManager.Get<BattleManager>();
+        bm?.OnDestroy();
         ModulesManager.Dispose<BattleManager>();
     }
 }

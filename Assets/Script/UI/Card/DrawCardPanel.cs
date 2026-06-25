@@ -18,6 +18,9 @@ public class DrawCardPanel : MonoBehaviour
     [Header("旋转装饰图")]
     public Image rotatingImage;
 
+    [Header("关卡完成提示")]
+    public Text levelCompleteText;
+
     private int _selectedIndex = -1;
     private CardData _selectedCardData;
     private Tween _rotateTween;
@@ -77,10 +80,14 @@ public class DrawCardPanel : MonoBehaviour
 
     public void OpenDrawCardPanel()
     {
+        if (this == null || gameObject == null) return;
         gameObject.SetActive(true);
         RandomCard();
         RefreshHaveCards();
         weaponPropertyPanel?.RefreshPanel();
+
+        if (levelCompleteText != null)
+            levelCompleteText.text = $"第{GameState.currentLevel}关已完成";
     }
 
     public void CloseDrawCardPanel()

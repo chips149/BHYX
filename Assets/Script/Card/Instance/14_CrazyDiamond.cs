@@ -1,10 +1,10 @@
 using UnityEngine;
 
-[CardProperty(14, "疯狂钻石", "UI/Card/Icon/CrazyDiamond", "回复50%血量,最小散布范围+20%")]
+[CardProperty(14, "疯狂钻石", "UI/Card/Icon/CrazyDiamond", "回复50%血量\n最小散布范围+20%")]
 
 public class CrazyDiamondCardData : CardData
 {
-    public override string detailText => "回复50%血量,最小散布范围+20%"; 
+    public override string detailText => "回复50%血量\n最小散布范围+20%"; 
     public override void OnChosen()
     {
         var pp = GameState.Pm.baseProperty;

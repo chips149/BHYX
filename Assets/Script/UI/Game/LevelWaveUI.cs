@@ -15,8 +15,15 @@ public class LevelWaveUI : MonoBehaviour
       instance = this;
    }
 
+   private void OnDestroy()
+   {
+      if (instance == this) instance = null;
+   }
+
    public void RefreshUI(int currentLevel,int currentWave, int totalWaves)
    {
+      if (this == null || levelText == null || waveSlider == null) return;
+
       levelText.text = $"第{currentLevel}关";
 
       waveSlider.maxValue = totalWaves;

@@ -17,9 +17,141 @@ public class GameUIManager : MonoBehaviour
     [Header("卡牌结算")]
     [SerializeField] private CardSettlementUI cardSettlementUI;
 
+    [Header("设置面板")]
+    public GameObject settingPanel;
+
+    [Header("返回确认面板")]
+    public GameObject returnPanel;
+
+    [Header("新手教程")]
+    public GameObject tutorialRoot;
+    public Image[] tutorialImages;
+    private int _tutorialIndex;
+
+    [Header("音效控制")]
+    public Button bgmToggleButton;
+    public Button sfxToggleButton;
+    public Sprite bgmOnIcon;
+    public Sprite bgmOffIcon;
+    public Sprite sfxOnIcon;
+    public Sprite sfxOffIcon;
+
     private void Awake()
     {
         instance = this;
+    }
+
+    private void Start()
+    {
+        if (settingPanel != null) settingPanel.SetActive(false);
+        if (returnPanel != null) returnPanel.SetActive(false);
+        if (tutorialRoot != null) tutorialRoot.SetActive(false);
+        Time.timeScale = 1f;
+
+        UpdateSoundIcons();
+        ShowTutorialIfNeeded();
+    }
+
+    private void ShowTutorialIfNeeded()
+    {
+        int playCount = PlayerPrefs.GetInt("GamePlayCount", 0);
+        bool alreadyShown = PlayerPrefs.GetInt("TutorialShown_" + playCount, 0) == 1;
+
+        if (playCount < 3 && !alreadyShown && tutorialRoot != null && tutorialImages.Length > 0)
+        {
+            PlayerPrefs.SetInt("TutorialShown_" + playCount, 1);
+            PlayerPrefs.Save();
+
+            _tutorialIndex = 0;
+            tutorialRoot.SetActive(true);
+            Time.timeScale = 0f;
+            ShowTutorialImage(0);
+        }
+
+        PlayerPrefs.SetInt("GamePlayCount", playCount + 1);
+        PlayerPrefs.Save();
+    }
+
+    private void ShowTutorialImage(int index)
+    {
+        for (int i = 0; i < tutorialImages.Length; i++)
+        {
+            if (tutorialImages[i] != null)
+                tutorialImages[i].gameObject.SetActive(i == index);
+        }
+        _tutorialIndex = index;
+    }
+
+    public void OnTutorialNextClicked()
+    {
+        if (_tutorialIndex + 1 < tutorialImages.Length)
+            ShowTutorialImage(_tutorialIndex + 1);
+    }
+
+    public void OnTutorialCloseClicked()
+    {
+        if (tutorialRoot != null) tutorialRoot.SetActive(false);
+        Time.timeScale = 1f;
+    }
+
+    public void OnSettingClicked()
+    {
+        if (settingPanel == null) return;
+        settingPanel.SetActive(true);
+        Time.timeScale = 0f;
+    }
+
+    public void OnCloseSettingClicked()
+    {
+        if (settingPanel == null) return;
+        settingPanel.SetActive(false);
+        Time.timeScale = 1f;
+    }
+
+    public void OnReturnClicked()
+    {
+        if (returnPanel == null) return;
+        returnPanel.SetActive(true);
+        Time.timeScale = 0f;
+    }
+
+    public void OnCancelReturnClicked()
+    {
+        if (returnPanel == null) return;
+        returnPanel.SetActive(false);
+        Time.timeScale = 1f;
+    }
+
+    public void OnConfirmReturnClicked()
+    {
+        OnMainMenuClicked();
+    }
+
+    private void UpdateSoundIcons()
+    {
+        SetButtonIcon(bgmToggleButton, SoundManager.IsBgmMuted ? bgmOffIcon : bgmOnIcon);
+        SetButtonIcon(sfxToggleButton, SoundManager.IsSfxMuted ? sfxOffIcon : sfxOnIcon);
+    }
+
+    private void SetButtonIcon(Button btn, Sprite sprite)
+    {
+        if (btn != null && sprite != null)
+        {
+            var img = btn.GetComponent<Image>();
+            if (img != null) img.sprite = sprite;
+        }
+    }
+
+    public void OnToggleBgmClicked()
+    {
+        SoundManager.ToggleBgmMute();
+        SetButtonIcon(bgmToggleButton, SoundManager.IsBgmMuted ? bgmOffIcon : bgmOnIcon);
+    }
+
+    public void OnToggleSfxClicked()
+    {
+        SoundManager.ToggleSfxMute();
+        SetButtonIcon(sfxToggleButton, SoundManager.IsSfxMuted ? sfxOffIcon : sfxOnIcon);
     }
 
     public void Win()
@@ -49,9 +181,10 @@ public class GameUIManager : MonoBehaviour
     
     public void OnMainMenuClicked()
     {
+        Time.timeScale = 1f;
         GameState.isGameOver = false;
         CoinSystem.CommitSessionCoins();
-        SaveManager.ClearPersistedSaveForNewGame();
+        SaveManager.ToSave();
         SceneManager.LoadScene("MainMenuScene");
     }
 }
