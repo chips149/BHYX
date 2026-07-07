@@ -29,6 +29,11 @@ public class MagicWeaponPanel : MonoBehaviour
     [Header("金币显示")]
     public TMP_Text coinText;
 
+    [Header("主界面法宝按钮")]
+    public Image magicWeaponButtonImage;
+    public Sprite[] weaponSprites;
+
+
     [Header("切换法宝清存档")]
     public GameObject ClearLevelImage;
     public Button clearConfirmButton;
@@ -101,6 +106,9 @@ public class MagicWeaponPanel : MonoBehaviour
         description.text = cell.description;
         boostAdjust.text = cell.boostAdjust;
         RefreshUpgradeInfo();
+
+        if (magicWeaponButtonImage != null && cell.id < weaponSprites.Length && weaponSprites[cell.id] != null)
+            magicWeaponButtonImage.sprite = weaponSprites[cell.id];
     }
 
     private IEnumerator ConfirmThenSwitch(DisplayCell cell)

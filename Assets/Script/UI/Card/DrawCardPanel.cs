@@ -35,7 +35,7 @@ public class DrawCardPanel : MonoBehaviour
             _rotateTween?.Kill();
             _rotateTween = rotatingImage.transform
                 .DOLocalRotate(new Vector3(0, 0, -360), 6f, RotateMode.FastBeyond360)
-                .SetLoops(-1, LoopType.Restart)
+                .SetLoops(-1, LoopType.Incremental)
                 .SetEase(Ease.Linear);
         }
     }

@@ -268,14 +268,12 @@ public class CardSettlementUI : MonoBehaviour
         if (nameText != null)
         {
             nameText.text = cardData.name;
-            nameText.color = Color.white;
         }
 
         var descText = itemObj.transform.Find("DescriptionText")?.GetComponent<Text>();
         if (descText != null)
         {
             descText.text = cardData.description;
-            descText.color = Color.white;
         }
     }
 

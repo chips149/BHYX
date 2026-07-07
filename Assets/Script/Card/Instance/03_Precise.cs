@@ -1,7 +1,7 @@
-[CardProperty(3,"精准","UI/Card/Icon/Precise","最大散步范围-25%\n血量-5")]
+[CardProperty(3,"精准","UI/Card/Icon/Precise","最大散布范围-25%\n血量-5")]
 public class PreciseCardData:CardData
 {
-    public override string detailText => "最大散步范围-25%\n血量-5";
+    public override string detailText => "最大散布范围-25%\n血量-5";
     public override void OnChosen()
     {
         var pp=GameState.Pm.baseProperty;

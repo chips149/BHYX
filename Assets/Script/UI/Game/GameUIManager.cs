@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -11,14 +12,17 @@ public class GameUIManager : MonoBehaviour
 
     public GameObject losePanel;
     public GameObject winPanel;
-    public Text winText;
-    public Text loseText;
+    public TextMeshProUGUI winText;
+    public TextMeshProUGUI loseText;
 
     [Header("卡牌结算")]
     [SerializeField] private CardSettlementUI cardSettlementUI;
 
     [Header("设置面板")]
     public GameObject settingPanel;
+
+    [Header("详情面板")]
+    public GameObject detailPanel;
 
     [Header("返回确认面板")]
     public GameObject returnPanel;
@@ -44,12 +48,19 @@ public class GameUIManager : MonoBehaviour
     private void Start()
     {
         if (settingPanel != null) settingPanel.SetActive(false);
+        if (detailPanel != null) detailPanel.SetActive(false);
         if (returnPanel != null) returnPanel.SetActive(false);
         if (tutorialRoot != null) tutorialRoot.SetActive(false);
         Time.timeScale = 1f;
 
         UpdateSoundIcons();
         ShowTutorialIfNeeded();
+    }
+
+    private IEnumerator DelayedUnpause()
+    {
+        yield return new WaitForEndOfFrame();
+        Time.timeScale = 1f;
     }
 
     private void ShowTutorialIfNeeded()
@@ -91,7 +102,7 @@ public class GameUIManager : MonoBehaviour
     public void OnTutorialCloseClicked()
     {
         if (tutorialRoot != null) tutorialRoot.SetActive(false);
-        Time.timeScale = 1f;
+        StartCoroutine(DelayedUnpause());
     }
 
     public void OnSettingClicked()
@@ -105,7 +116,21 @@ public class GameUIManager : MonoBehaviour
     {
         if (settingPanel == null) return;
         settingPanel.SetActive(false);
-        Time.timeScale = 1f;
+        StartCoroutine(DelayedUnpause());
+    }
+
+    public void OnDetailClicked()
+    {
+        if (detailPanel == null) return;
+        detailPanel.SetActive(true);
+        Time.timeScale = 0f;
+    }
+
+    public void OnCloseDetailClicked()
+    {
+        if (detailPanel == null) return;
+        detailPanel.SetActive(false);
+        StartCoroutine(DelayedUnpause());
     }
 
     public void OnReturnClicked()
@@ -119,7 +144,7 @@ public class GameUIManager : MonoBehaviour
     {
         if (returnPanel == null) return;
         returnPanel.SetActive(false);
-        Time.timeScale = 1f;
+        StartCoroutine(DelayedUnpause());
     }
 
     public void OnConfirmReturnClicked()
@@ -174,9 +199,14 @@ public class GameUIManager : MonoBehaviour
     private void ShowCardSettlement()
     {
         if (cardSettlementUI != null)
+        {
             cardSettlementUI.Show();
+        }
         else
-            FindObjectOfType<CardSettlementUI>(true)?.Show();
+        {
+            var found = FindObjectOfType<CardSettlementUI>(true);
+            if (found != null) found.Show();
+        }
     }
     
     public void OnMainMenuClicked()
@@ -184,7 +214,7 @@ public class GameUIManager : MonoBehaviour
         Time.timeScale = 1f;
         GameState.isGameOver = false;
         CoinSystem.CommitSessionCoins();
-        SaveManager.ToSave();
+        SaveManager.ClearPersistedSaveForNewGame();
         SceneManager.LoadScene("MainMenuScene");
     }
 }

@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-[CardProperty(19, "水盾", "UI/Card/Icon/WaterShield", "每40秒刷新水盾\n攻击力-2\n子弹回复速度+15%",isSkillCard = true)]
+[CardProperty(19, "水盾", "UI/Card/Icon/WaterShield", "每40秒刷新水盾\n子弹回复速度+15%",isSkillCard = true)]
 
 public class WaterShield : CardData
 {
@@ -10,7 +10,6 @@ public class WaterShield : CardData
         var pp = GameState.Pm.baseProperty;
         var ph = GameState.Pm.playerHealth;
         
-        pp.damage -= 2;
         pp.bulletReloadTime *= 0.85f;
         GameState.Pm.UpdateProperty();
 

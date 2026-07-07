@@ -21,6 +21,10 @@ public class WaterTornado : CardData
 
     public override void OnReplay()
     {
+        var pp = GameState.Pm.baseProperty;
+        pp.critRate += 10 * pp.critRateCorrection;
+        pp.bulletScale += 0.15f;
+        GameState.Pm.UpdateProperty();
         hasWaterTornado = true;
     }
 

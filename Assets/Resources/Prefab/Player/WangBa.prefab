@@ -552,7 +552,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   offsetZ: 4
-  spawnEffect: {fileID: 3494571459410361629, guid: d464c8dad8ffed44d8ab737aa0d999c7, type: 3}
 --- !u!95 &8544294219959691401
 Animator:
   serializedVersion: 5
@@ -784,7 +783,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -3620572297651811420, guid: 01a981e72302d0345a1a065f105f7dcf, type: 3}
+  - {fileID: 2100000, guid: 4e3348d034464904fa4675489e8e2898, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

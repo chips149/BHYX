@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -20,7 +21,7 @@ public class SelectModePanel : MonoBehaviour
     private bool isAnimating;
 
     public ModeConfig[] modes;
-    public Text modeText;
+    public TextMeshProUGUI modeText;
     public Button leftButton;
     public Button rightButton;
     public RectTransform textContainer;
@@ -57,7 +58,7 @@ public class SelectModePanel : MonoBehaviour
 
         var newTextObj = Instantiate(oldText.gameObject, parent);
         newTextObj.transform.SetSiblingIndex(oldText.transform.GetSiblingIndex());
-        var newText = newTextObj.GetComponent<Text>();
+        var newText = newTextObj.GetComponent<TextMeshProUGUI>();
         var config = modes[newIndex];
 
         newText.text = config.modeName;

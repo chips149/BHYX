@@ -120,7 +120,7 @@ public class PlayerHealth : MonoBehaviour, IBeHit
 
     public void UpdateHealthDisplay()
     {
-        playerHealthText.text = $" {currentHp}";
+        playerHealthText.text = $"{currentHp}";
     }
 
     private void UpdateShieldDisplay()

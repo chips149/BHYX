@@ -1,13 +1,14 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class LevelWaveUI : MonoBehaviour
 {
    public static LevelWaveUI instance;
-   public Text levelText;
+   public TextMeshProUGUI levelText;
    public Slider waveSlider;
 
    private void Awake()
